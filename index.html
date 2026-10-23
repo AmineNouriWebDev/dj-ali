@@ -1382,7 +1382,7 @@
     };
 
     /* Calendrier inline */
-    flatpickr('#fp-inline', {
+    const fpInline = flatpickr('#fp-inline', {
       ...fpOptions,
       inline: true,
       onChange(_, dateStr) {
@@ -1397,7 +1397,25 @@
     });
 
     /* Input date du formulaire */
-    flatpickr('#f-date', { ...fpOptions });
+    const fpInput = flatpickr('#f-date', { ...fpOptions });
+
+    /* Synchronisation des dates bloquées depuis n8n */
+    async function syncBlockedDates() {
+      try {
+        const res = await fetch('https://n8n.deposark.com/webhook/dates-bloquees');
+        if (res.ok) {
+          const dates = await res.json();
+          if (Array.isArray(dates) && dates.length > 0) {
+            reservedDates = [...new Set([...reservedDates, ...dates])];
+            if (fpInline) fpInline.set('disable', reservedDates);
+            if (fpInput) fpInput.set('disable', reservedDates);
+          }
+        }
+      } catch (e) {
+        /* En local ou hors-ligne, Flatpickr garde les dates réservées de base */
+      }
+    }
+    syncBlockedDates();
 
     /* ============================================
        12. FORMULAIRE DE RÉSERVATION
