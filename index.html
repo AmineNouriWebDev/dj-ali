@@ -1362,15 +1362,14 @@
     });
 
     /* ============================================
-       11. FLATPICKR — Calendriers
+       11. FLATPICKR — Calendriers & Sync Google Calendar via n8n
     ============================================ */
-    /* Dates réservées exemple (à synchroniser avec backend) */
     const now = new Date();
     const yr  = now.getFullYear();
     const mn  = (now.getMonth() + 1).toString().padStart(2, '0');
     const mn2 = ((now.getMonth() + 2) % 12 || 12).toString().padStart(2, '0');
 
-    const reservedDates = [
+    let reservedDates = [
       `${yr}-${mn}-05`, `${yr}-${mn}-12`, `${yr}-${mn}-19`, `${yr}-${mn}-26`,
       `${yr}-${mn2}-02`, `${yr}-${mn2}-09`, `${yr}-${mn2}-16`,
     ];
@@ -1383,14 +1382,13 @@
     };
 
     /* Calendrier inline */
-    flatpickr('#fp-inline', {
+    const fpInline = flatpickr('#fp-inline', {
       ...fpOptions,
       inline: true,
       onChange(_, dateStr) {
         const df = document.getElementById('f-date');
         if (df) {
           df.value = dateStr;
-          /* Highlight visuel */
           df.style.borderColor = 'rgba(201,168,76,0.5)';
           df.style.boxShadow   = '0 0 0 3px rgba(201,168,76,0.08)';
           setTimeout(() => { df.style.borderColor = ''; df.style.boxShadow = ''; }, 2500);
@@ -1399,7 +1397,27 @@
     });
 
     /* Input date du formulaire */
-    flatpickr('#f-date', { ...fpOptions });
+    const fpInput = flatpickr('#f-date', { ...fpOptions });
+
+    /* Synchronisation dynamique des dates réservées depuis Google Calendar via n8n */
+    async function syncBlockedDates() {
+      try {
+        const res = await fetch('https://n8n.deposark.com/webhook/dates-bloquees', {
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          const remoteDates = await res.json();
+          if (Array.isArray(remoteDates) && remoteDates.length > 0) {
+            reservedDates = [...new Set([...reservedDates, ...remoteDates])];
+            if (fpInline) fpInline.set('disable', reservedDates);
+            if (fpInput) fpInput.set('disable', reservedDates);
+          }
+        }
+      } catch (err) {
+        console.log('Calendrier chargé en mode local (n8n webhook en attente)');
+      }
+    }
+    syncBlockedDates();
 
     /* ============================================
        12. FORMULAIRE DE RÉSERVATION
