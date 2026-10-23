@@ -1382,7 +1382,7 @@
     };
 
     /* Calendrier inline */
-    const fpInline = flatpickr('#fp-inline', {
+    flatpickr('#fp-inline', {
       ...fpOptions,
       inline: true,
       onChange(_, dateStr) {
@@ -1397,27 +1397,7 @@
     });
 
     /* Input date du formulaire */
-    const fpInput = flatpickr('#f-date', { ...fpOptions });
-
-    /* Synchronisation dynamique des dates réservées depuis Google Calendar via n8n */
-    async function syncBlockedDates() {
-      try {
-        const res = await fetch('https://n8n.deposark.com/webhook/dates-bloquees', {
-          headers: { 'Accept': 'application/json' }
-        });
-        if (res.ok) {
-          const remoteDates = await res.json();
-          if (Array.isArray(remoteDates) && remoteDates.length > 0) {
-            reservedDates = [...new Set([...reservedDates, ...remoteDates])];
-            if (fpInline) fpInline.set('disable', reservedDates);
-            if (fpInput) fpInput.set('disable', reservedDates);
-          }
-        }
-      } catch (err) {
-        console.log('Calendrier chargé en mode local (n8n webhook en attente)');
-      }
-    }
-    syncBlockedDates();
+    flatpickr('#f-date', { ...fpOptions });
 
     /* ============================================
        12. FORMULAIRE DE RÉSERVATION
