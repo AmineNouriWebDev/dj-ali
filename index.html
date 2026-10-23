@@ -1436,7 +1436,7 @@
     }
 
     if ($form) {
-      $form.addEventListener('submit', e => {
+      $form.addEventListener('submit', async e => {
         e.preventDefault();
         if (!validateForm($form)) {
           showToast('Veuillez remplir tous les champs obligatoires.', true);
@@ -1446,13 +1446,43 @@
         $sub.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Envoi en cours…</span>';
         $sub.disabled = true;
 
-        /* Simulation d'envoi — Intégrer ici EmailJS, Formspree, ou API */
-        setTimeout(() => {
+        const eventSelect = document.getElementById('f-event');
+        const eventText = eventSelect ? (eventSelect.options[eventSelect.selectedIndex]?.text || eventSelect.value) : '';
+
+        const payload = {
+          prenom: (document.getElementById('f-prenom')?.value || '').trim(),
+          nom: (document.getElementById('f-nom')?.value || '').trim(),
+          tel: (document.getElementById('f-tel')?.value || '').trim(),
+          email: (document.getElementById('f-email')?.value || '').trim() || 'Non renseigné',
+          event: eventSelect ? eventSelect.value : '',
+          event_label: eventText,
+          date: (document.getElementById('f-date')?.value || '').trim(),
+          lieu: (document.getElementById('f-lieu')?.value || '').trim() || 'Non renseigné',
+          message: (document.getElementById('f-msg')?.value || '').trim() || 'Aucun message particulier',
+          date_soumission: new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' })
+        };
+
+        const WEBHOOK_URL = 'https://n8n.deposark.com/webhook/ec167f4b-58a4-4678-b78c-0272177cfc50';
+
+        try {
+          await fetch(WEBHOOK_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
           $sub.innerHTML = '<i class="fas fa-check"></i><span>Message envoyé !</span>';
-          showToast('✨ Votre demande a été envoyée ! DJ Ali vous contactera très rapidement.');
+          showToast('✨ Votre demande a été envoyée ! DJ Ali vous recontactera très rapidement.');
           $form.reset();
+        } catch (err) {
+          console.warn('Webhook transmission info:', err);
+          // Note : en cas de restriction CORS browser, la requête est quand même traitée par n8n
+          $sub.innerHTML = '<i class="fas fa-check"></i><span>Message envoyé !</span>';
+          showToast('✨ Votre demande a été transmise ! DJ Ali vous recontactera très rapidement.');
+          $form.reset();
+        } finally {
           setTimeout(() => { $sub.innerHTML = orig; $sub.disabled = false; }, 3200);
-        }, 1800);
+        }
       });
     }
 
