@@ -263,7 +263,15 @@
       z-index: 0;
       background-size: cover;
       background-position: center;
+      background-image: url('assets/hero-bg.jpg');
       filter: brightness(0.35) saturate(1.2);
+    }
+
+    @media (max-width: 768px) {
+      .hero-bg-img {
+        background-image: url('assets/hero-bg-mobile.jpg') !important;
+        background-position: center top;
+      }
     }
 
     .hero-overlay {
@@ -1235,8 +1243,8 @@
        HERO
   ============================== -->
   <section id="hero" aria-label="Accueil">
-    <!-- Fallback image de fond -->
-    <div class="hero-bg-img" style="background-image: url('assets/hero-bg.jpg');" aria-hidden="true"></div>
+    <!-- Image de fond responsive (Desktop & Mobile) -->
+    <div class="hero-bg-img" aria-hidden="true"></div>
 
     <!-- Vidéo de fond (sera visible si disponible) -->
     <video id="hero-video" autoplay muted loop playsinline aria-hidden="true">
