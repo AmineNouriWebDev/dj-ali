@@ -1,0 +1,560 @@
+{
+  "name": "DJ Ali - Système Mailing & Blocage Dates (Sécurisé)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ec167f4b-58a4-4678-b78c-0272177cfc50",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -460,
+        -160
+      ],
+      "id": "node-wh-site",
+      "name": "1. Webhook Formulaire Site",
+      "webhookId": "ec167f4b-58a4-4678-b78c-0272177cfc50"
+    },
+    {
+      "parameters": {
+        "jsCode": "const b = $input.first().json.body || {};\n\nconst tokenConfirm = Buffer.from(JSON.stringify({\n  action: 'confirmer',\n  prenom: b.prenom || '',\n  nom: b.nom || '',\n  tel: b.tel || '',\n  email: b.email || '',\n  date: b.date || '',\n  event_label: b.event_label || '',\n  lieu: b.lieu || ''\n})).toString('base64url');\n\nconst tokenRefuse = Buffer.from(JSON.stringify({\n  action: 'refuser',\n  prenom: b.prenom || '',\n  nom: b.nom || '',\n  email: b.email || '',\n  date: b.date || ''\n})).toString('base64url');\n\nreturn [{\n  json: {\n    ...b,\n    tokenConfirm,\n    tokenRefuse\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -220,
+        -160
+      ],
+      "id": "node-tokens",
+      "name": "Générer Jetons Sécurisés"
+    },
+    {
+      "parameters": {
+        "fromEmail": "no-reply@maxsolving.com",
+        "toEmail": "nouri.medamine1987@gmail.com",
+        "subject": "={{ '🚨 DJ Ali - Nouvelle demande : ' + $json.event_label + ' - ' + $json.prenom + ' ' + $json.nom }}",
+        "html": "=<h3>🎧 Nouvelle demande de réservation pour DJ Ali</h3><table border=\"1\" cellpadding=\"8\" cellspacing=\"0\" style=\"border-collapse: collapse; width: 100%; max-width: 600px; font-family: Arial, sans-serif;\"><tr style=\"background:#1a1a24; color:#c9a84c;\"><td><strong>Client</strong></td><td><strong>{{ $json.prenom }} {{ $json.nom }}</strong></td></tr><tr><td><strong>Téléphone</strong></td><td><a href=\"tel:{{ $json.tel }}\" style=\"font-weight:bold; color:#0284c7;\">{{ $json.tel }}</a></td></tr><tr><td><strong>Email</strong></td><td><a href=\"mailto:{{ $json.email }}\">{{ $json.email }}</a></td></tr><tr><td><strong>Événement</strong></td><td><strong>{{ $json.event_label }}</strong></td></tr><tr style=\"background:#fdf2d8; font-weight:bold;\"><td><strong>Date souhaitée</strong></td><td><span style=\"font-size:16px; color:#b45309;\">{{ $json.date }}</span></td></tr><tr><td><strong>Lieu</strong></td><td>{{ $json.lieu }}</td></tr><tr><td><strong>Message</strong></td><td>{{ $json.message }}</td></tr></table><br><div style=\"max-width: 600px; text-align: center; padding: 22px; background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 8px;\"><p style=\"margin: 0 0 15px 0; font-size: 14px; font-weight: bold; color: #334155;\">Action pour DJ Ali :</p><a href=\"{{ 'https://n8n.deposark.com/webhook/reponse-reservation?t=' + $json.tokenConfirm }}\" style=\"display: inline-block; background-color: #16a34a; color: #ffffff; padding: 12px 22px; text-decoration: none; font-weight: bold; border-radius: 6px; margin-right: 12px;\">✅ Valider la demande</a><a href=\"{{ 'https://n8n.deposark.com/webhook/reponse-reservation?t=' + $json.tokenRefuse }}\" style=\"display: inline-block; background-color: #dc2626; color: #ffffff; padding: 12px 22px; text-decoration: none; font-weight: bold; border-radius: 6px;\">❌ Décliner</a></div>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        40,
+        -160
+      ],
+      "id": "node-email-alert",
+      "name": "Email Alerte DJ Ali",
+      "credentials": {
+        "smtp": {
+          "id": "lUhnuvPzoZ2xYJ9L",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "reponse-reservation",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -460,
+        140
+      ],
+      "id": "node-wh-ecran",
+      "name": "2. Clic Lien Email",
+      "webhookId": "reponse-reservation"
+    },
+    {
+      "parameters": {
+        "jsCode": "let data = {};\ntry {\n  const raw = $input.first().json.query.t || '';\n  data = JSON.parse(Buffer.from(raw, 'base64url').toString('utf-8'));\n} catch (e) {\n  data = { action: 'erreur' };\n}\nreturn [{ json: data }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -220,
+        140
+      ],
+      "id": "node-decode-token",
+      "name": "Décoder Jeton"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "=<!DOCTYPE html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'><title>DJ Ali — Décision</title><style>body{font-family:Arial,sans-serif;background:#0d0d18;color:#fff;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:20px;box-sizing:border-box}.card{background:#171725;border:1px solid {{ $json.action === 'confirmer' ? '#22c55e' : '#ef4444' }};padding:30px;border-radius:12px;text-align:center;max-width:480px;width:100%}h2{color:#c9a84c;margin-top:0}.info{background:#0d0d18;border-radius:8px;padding:15px;margin:20px 0;text-align:left;font-size:14px;line-height:1.8}.btn{display:block;width:100%;padding:14px;border:none;border-radius:8px;font-weight:bold;font-size:16px;cursor:pointer;color:#fff;text-transform:uppercase;letter-spacing:1px}.btn-confirm{background:#16a34a}.btn-refuse{background:#dc2626}#status{margin-top:15px;font-size:15px;font-weight:bold;}</style></head><body><div class='card' id='box'><h2>{{ $json.action === 'confirmer' ? 'Validation de réservation' : 'Décliner la prestation' }}</h2><div class='info'><strong>Client :</strong> {{ $json.prenom }} {{ $json.nom }}<br><strong>Date :</strong> {{ $json.date }}<br><strong>Événement :</strong> {{ $json.event_label || 'Prestation' }}<br><strong>Email :</strong> {{ $json.email }}</div><button type='button' id='submitBtn' class='btn {{ $json.action === 'confirmer' ? 'btn-confirm' : 'btn-refuse' }}' onclick='valider()'>{{ $json.action === 'confirmer' ? '✅ Confirmer définitivement' : '❌ Confirmer le refus' }}</button><div id='status'></div></div><script>function valider(){var btn=document.getElementById('submitBtn');btn.disabled=true;btn.innerText='Traitement en cours...';var payload={'action':'{{ $json.action }}','prenom':'{{ $json.prenom }}','nom':'{{ $json.nom }}','tel':'{{ $json.tel }}','email':'{{ $json.email }}','date':'{{ $json.date }}','event_label':'{{ $json.event_label }}','lieu':'{{ $json.lieu }}'};fetch('https://n8n.deposark.com/webhook/executer-action',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(function(){document.getElementById('box').innerHTML='<h2 style=\"color:{{ $json.action === \"confirmer\" ? \"#22c55e\" : \"#ef4444\" }}\">{{ $json.action === \"confirmer\" ? \"✅ Réservation Validée !\" : \"❌ Demande Déclinée\" }}</h2><p style=\"color:#cbd5e1;line-height:1.6;\">{{ $json.action === \"confirmer\" ? \"La date est désormais <strong>bloquée sur le site</strong> et le client a reçu son email de confirmation.\" : \"Le client a été notifié par email avec courtoisie.\" }}</p>';}).catch(function(){btn.innerText='Erreur réessayez';btn.disabled=false;});}</script></body></html>",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "text/html; charset=utf-8"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        40,
+        140
+      ],
+      "id": "node-rep-ecran",
+      "name": "Afficher Écran Sécurisé"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "executer-action",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -460,
+        420
+      ],
+      "id": "node-wh-exec",
+      "name": "3. Clic Bouton Validation (POST)",
+      "webhookId": "executer-action"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "cond-exec-check",
+              "leftValue": "={{ $json.body.action }}",
+              "rightValue": "confirmer",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.1,
+      "position": [
+        -160,
+        420
+      ],
+      "id": "node-if-exec",
+      "name": "Action == Confirmer ?"
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "fileSelector": "/tmp/dj_ali_dates.json",
+        "fileName": "/tmp/dj_ali_dates.json",
+        "dataPropertyName": "data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        100,
+        320
+      ],
+      "id": "node-read-disk",
+      "name": "Lire Fichier Local",
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $('3. Clic Bouton Validation (POST)').first().json.body || {};\nconst rawDate = body.date || '';\nconst parts = rawDate.split('/');\nlet dateIso = rawDate;\nif (parts.length === 3) {\n  dateIso = `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;\n}\n\nlet dates = [];\ntry {\n  const b64 = $input.first().binary?.data?.data;\n  if (b64) {\n    dates = JSON.parse(Buffer.from(b64, 'base64').toString('utf-8'));\n  }\n} catch (e) {}\n\nif (dateIso && !dates.includes(dateIso)) {\n  dates.push(dateIso);\n}\nif (rawDate && !dates.includes(rawDate)) {\n  dates.push(rawDate);\n}\n\nconst jsonStr = JSON.stringify(dates);\nreturn [{\n  json: { ...body, dateIso, allDates: dates },\n  binary: {\n    data: {\n      data: Buffer.from(jsonStr).toString('base64'),\n      mimeType: 'application/json',\n      fileName: 'dj_ali_dates.json'\n    }\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        340,
+        320
+      ],
+      "id": "node-append-date",
+      "name": "Ajouter Date au Fichier"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileSelector": "/tmp/dj_ali_dates.json",
+        "fileName": "/tmp/dj_ali_dates.json",
+        "dataPropertyName": "data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        580,
+        320
+      ],
+      "id": "node-write-disk",
+      "name": "Sauvegarder Fichier Local"
+    },
+    {
+      "parameters": {
+        "fromEmail": "no-reply@maxsolving.com",
+        "toEmail": "={{ $('3. Clic Bouton Validation (POST)').first().json.body.email }}",
+        "subject": "={{ 'DJ Ali - Votre date du ' + $('3. Clic Bouton Validation (POST)').first().json.body.date + ' est validée ! 🎉' }}",
+        "html": "=<div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #0c0c14; color: #ffffff; padding: 25px; border-radius: 8px; border: 1px solid #c9a84c;\"><h2 style=\"color: #c9a84c; text-align: center;\">Félicitations ! Votre réservation est confirmée</h2><p>Bonjour <strong>{{ $('3. Clic Bouton Validation (POST)').first().json.body.prenom }}</strong>,</p><p>DJ Ali a le plaisir de vous confirmer sa disponibilité et la validation de votre réservation :</p><div style=\"background: #171724; padding: 15px; border-left: 4px solid #c9a84c; margin: 20px 0;\"><p style=\"margin: 5px 0;\">📅 <strong>Date retenue :</strong> {{ $('3. Clic Bouton Validation (POST)').first().json.body.date }}</p><p style=\"margin: 5px 0;\">💒 <strong>Événement :</strong> {{ $('3. Clic Bouton Validation (POST)').first().json.body.event_label }}</p><p style=\"margin: 5px 0;\">📍 <strong>Lieu :</strong> {{ $('3. Clic Bouton Validation (POST)').first().json.body.lieu }}</p></div><p>DJ Ali prendra contact avec vous par téléphone au <strong>{{ $('3. Clic Bouton Validation (POST)').first().json.body.tel }}</strong> pour échanger sur vos envies musicales.</p><p style=\"font-size: 13px; color: #94a3b8; margin-top: 25px;\">Une question ? Contactez directement DJ Ali au <a href=\"tel:0618410680\" style=\"color: #c9a84c; font-weight: bold;\">06 18 41 06 80</a>.</p></div>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        820,
+        320
+      ],
+      "id": "node-email-confirm",
+      "name": "Email Confirmation Client",
+      "credentials": {
+        "smtp": {
+          "id": "lUhnuvPzoZ2xYJ9L",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \"success\": true }",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1060,
+        320
+      ],
+      "id": "node-rep-ok",
+      "name": "Réponse Succès"
+    },
+    {
+      "parameters": {
+        "fromEmail": "no-reply@maxsolving.com",
+        "toEmail": "={{ $json.body.email }}",
+        "subject": "={{ 'DJ Ali - Disponibilité pour le ' + $json.body.date }}",
+        "html": "=<div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;\"><p>Bonjour {{ $json.body.prenom }},</p><p>Nous vous remercions pour l'intérêt que vous portez à DJ Ali.</p><p>Malheureusement, DJ Ali est déjà engagé sur une prestation à la date du <strong>{{ $json.body.date }}</strong> et ne pourra pas être disponible.</p><p>N'hésitez pas à nous recontacter pour une autre date !</p><br><p>Bien cordialement,<br><strong>DJ Ali</strong></p></div>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        100,
+        520
+      ],
+      "id": "node-email-refus",
+      "name": "Email Refus Client",
+      "credentials": {
+        "smtp": {
+          "id": "lUhnuvPzoZ2xYJ9L",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \"success\": true, \"action\": \"refus\" }",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        340,
+        520
+      ],
+      "id": "node-rep-ko",
+      "name": "Réponse Refus"
+    },
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "dates-bloquees",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -460,
+        740
+      ],
+      "id": "node-wh-dates",
+      "name": "4. Webhook Dates Bloquées (Site)",
+      "webhookId": "dates-bloquees"
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "fileSelector": "/tmp/dj_ali_dates.json",
+        "fileName": "/tmp/dj_ali_dates.json",
+        "dataPropertyName": "data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        740
+      ],
+      "id": "node-read-site",
+      "name": "Lire Dates du Fichier",
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "let dates = [];\ntry {\n  const b64 = $input.first().binary?.data?.data;\n  if (b64) {\n    dates = JSON.parse(Buffer.from(b64, 'base64').toString('utf-8'));\n  }\n} catch (e) {}\nreturn [{ json: dates }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        100,
+        740
+      ],
+      "id": "node-code-dates",
+      "name": "Extraire Liste JSON"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json; charset=utf-8"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        340,
+        740
+      ],
+      "id": "node-rep-dates",
+      "name": "Renvoyer JSON au Site"
+    }
+  ],
+  "connections": {
+    "1. Webhook Formulaire Site": {
+      "main": [
+        [
+          {
+            "node": "Générer Jetons Sécurisés",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Générer Jetons Sécurisés": {
+      "main": [
+        [
+          {
+            "node": "Email Alerte DJ Ali",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2. Clic Lien Email": {
+      "main": [
+        [
+          {
+            "node": "Décoder Jeton",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Décoder Jeton": {
+      "main": [
+        [
+          {
+            "node": "Afficher Écran Sécurisé",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3. Clic Bouton Validation (POST)": {
+      "main": [
+        [
+          {
+            "node": "Action == Confirmer ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Action == Confirmer ?": {
+      "main": [
+        [
+          {
+            "node": "Lire Fichier Local",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Email Refus Client",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lire Fichier Local": {
+      "main": [
+        [
+          {
+            "node": "Ajouter Date au Fichier",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ajouter Date au Fichier": {
+      "main": [
+        [
+          {
+            "node": "Sauvegarder Fichier Local",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sauvegarder Fichier Local": {
+      "main": [
+        [
+          {
+            "node": "Email Confirmation Client",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email Confirmation Client": {
+      "main": [
+        [
+          {
+            "node": "Réponse Succès",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email Refus Client": {
+      "main": [
+        [
+          {
+            "node": "Réponse Refus",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4. Webhook Dates Bloquées (Site)": {
+      "main": [
+        [
+          {
+            "node": "Lire Dates du Fichier",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lire Dates du Fichier": {
+      "main": [
+        [
+          {
+            "node": "Extraire Liste JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extraire Liste JSON": {
+      "main": [
+        [
+          {
+            "node": "Renvoyer JSON au Site",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true
+  }
+}
