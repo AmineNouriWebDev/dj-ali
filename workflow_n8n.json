@@ -161,58 +161,10 @@
     },
     {
       "parameters": {
-        "operation": "read",
-        "fileSelector": "/tmp/dj_ali_dates.json",
-        "fileName": "/tmp/dj_ali_dates.json",
-        "dataPropertyName": "data",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.readWriteFile",
-      "typeVersion": 1,
-      "position": [
-        100,
-        320
-      ],
-      "id": "node-read-disk",
-      "name": "Lire Fichier Local",
-      "continueOnFail": true
-    },
-    {
-      "parameters": {
-        "jsCode": "const body = $('3. Clic Bouton Validation (POST)').first().json.body || {};\nconst rawDate = body.date || '';\nconst parts = rawDate.split('/');\nlet dateIso = rawDate;\nif (parts.length === 3) {\n  dateIso = `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;\n}\n\nlet dates = [];\ntry {\n  const b64 = $input.first().binary?.data?.data;\n  if (b64) {\n    dates = JSON.parse(Buffer.from(b64, 'base64').toString('utf-8'));\n  }\n} catch (e) {}\n\nif (dateIso && !dates.includes(dateIso)) {\n  dates.push(dateIso);\n}\nif (rawDate && !dates.includes(rawDate)) {\n  dates.push(rawDate);\n}\n\nconst jsonStr = JSON.stringify(dates);\nreturn [{\n  json: { ...body, dateIso, allDates: dates },\n  binary: {\n    data: {\n      data: Buffer.from(jsonStr).toString('base64'),\n      mimeType: 'application/json',\n      fileName: 'dj_ali_dates.json'\n    }\n  }\n}];"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        340,
-        320
-      ],
-      "id": "node-append-date",
-      "name": "Ajouter Date au Fichier"
-    },
-    {
-      "parameters": {
-        "operation": "write",
-        "fileSelector": "/tmp/dj_ali_dates.json",
-        "fileName": "/tmp/dj_ali_dates.json",
-        "dataPropertyName": "data",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.readWriteFile",
-      "typeVersion": 1,
-      "position": [
-        580,
-        320
-      ],
-      "id": "node-write-disk",
-      "name": "Sauvegarder Fichier Local"
-    },
-    {
-      "parameters": {
         "fromEmail": "no-reply@maxsolving.com",
-        "toEmail": "={{ $('3. Clic Bouton Validation (POST)').first().json.body.email }}",
-        "subject": "={{ 'DJ Ali - Votre date du ' + $('3. Clic Bouton Validation (POST)').first().json.body.date + ' est validée ! 🎉' }}",
-        "html": "=<div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #0c0c14; color: #ffffff; padding: 25px; border-radius: 8px; border: 1px solid #c9a84c;\"><h2 style=\"color: #c9a84c; text-align: center;\">Félicitations ! Votre réservation est confirmée</h2><p>Bonjour <strong>{{ $('3. Clic Bouton Validation (POST)').first().json.body.prenom }}</strong>,</p><p>DJ Ali a le plaisir de vous confirmer sa disponibilité et la validation de votre réservation :</p><div style=\"background: #171724; padding: 15px; border-left: 4px solid #c9a84c; margin: 20px 0;\"><p style=\"margin: 5px 0;\">📅 <strong>Date retenue :</strong> {{ $('3. Clic Bouton Validation (POST)').first().json.body.date }}</p><p style=\"margin: 5px 0;\">💒 <strong>Événement :</strong> {{ $('3. Clic Bouton Validation (POST)').first().json.body.event_label }}</p><p style=\"margin: 5px 0;\">📍 <strong>Lieu :</strong> {{ $('3. Clic Bouton Validation (POST)').first().json.body.lieu }}</p></div><p>DJ Ali prendra contact avec vous par téléphone au <strong>{{ $('3. Clic Bouton Validation (POST)').first().json.body.tel }}</strong> pour échanger sur vos envies musicales.</p><p style=\"font-size: 13px; color: #94a3b8; margin-top: 25px;\">Une question ? Contactez directement DJ Ali au <a href=\"tel:0618410680\" style=\"color: #c9a84c; font-weight: bold;\">06 18 41 06 80</a>.</p></div>",
+        "toEmail": "={{ $json.body.email }}",
+        "subject": "={{ 'DJ Ali - Votre date du ' + $json.body.date + ' est validée ! 🎉' }}",
+        "html": "=<div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #0c0c14; color: #ffffff; padding: 25px; border-radius: 8px; border: 1px solid #c9a84c;\"><h2 style=\"color: #c9a84c; text-align: center;\">Félicitations ! Votre réservation est confirmée</h2><p>Bonjour <strong>{{ $json.body.prenom }}</strong>,</p><p>DJ Ali a le plaisir de vous confirmer sa disponibilité et la validation de votre réservation :</p><div style=\"background: #171724; padding: 15px; border-left: 4px solid #c9a84c; margin: 20px 0;\"><p style=\"margin: 5px 0;\">📅 <strong>Date retenue :</strong> {{ $json.body.date }}</p><p style=\"margin: 5px 0;\">💒 <strong>Événement :</strong> {{ $json.body.event_label }}</p><p style=\"margin: 5px 0;\">📍 <strong>Lieu :</strong> {{ $json.body.lieu }}</p></div><p>DJ Ali prendra contact avec vous par téléphone au <strong>{{ $json.body.tel }}</strong> pour échanger sur vos envies musicales.</p><p style=\"font-size: 13px; color: #94a3b8; margin-top: 25px;\">Une question ? Contactez directement DJ Ali au <a href=\"tel:0618410680\" style=\"color: #c9a84c; font-weight: bold;\">06 18 41 06 80</a>.</p></div>",
         "options": {
           "appendAttribution": false
         }
@@ -220,7 +172,7 @@
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
       "position": [
-        820,
+        120,
         320
       ],
       "id": "node-email-confirm",
@@ -231,6 +183,19 @@
           "name": "SMTP account"
         }
       }
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $('3. Clic Bouton Validation (POST)').first().json.body || {};\nconst rawDate = body.date || '';\nconst parts = rawDate.split('/');\nlet dateIso = rawDate;\nif (parts.length === 3) {\n  dateIso = `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;\n}\n\n// 1. Sauvegarde dans staticData global de n8n\ntry {\n  const staticData = $getWorkflowStaticData('global');\n  staticData.blockedDates = staticData.blockedDates || [];\n  if (dateIso && !staticData.blockedDates.includes(dateIso)) {\n    staticData.blockedDates.push(dateIso);\n  }\n  if (rawDate && !staticData.blockedDates.includes(rawDate)) {\n    staticData.blockedDates.push(rawDate);\n  }\n} catch (e) {}\n\n// 2. Sauvegarde dans fichier /tmp si filesystem accessible\ntry {\n  const fs = require('fs');\n  const p = '/tmp/dj_ali_dates.json';\n  let fileDates = [];\n  if (fs.existsSync(p)) {\n    fileDates = JSON.parse(fs.readFileSync(p, 'utf8'));\n  }\n  if (dateIso && !fileDates.includes(dateIso)) fileDates.push(dateIso);\n  if (rawDate && !fileDates.includes(rawDate)) fileDates.push(rawDate);\n  fs.writeFileSync(p, JSON.stringify(fileDates));\n} catch (e) {}\n\nreturn [{\n  json: {\n    success: true,\n    date: rawDate,\n    dateIso\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        380,
+        320
+      ],
+      "id": "node-save-date",
+      "name": "Mémoriser Date"
     },
     {
       "parameters": {
@@ -254,7 +219,7 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
       "position": [
-        1060,
+        640,
         320
       ],
       "id": "node-rep-ok",
@@ -273,7 +238,7 @@
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
       "position": [
-        100,
+        120,
         520
       ],
       "id": "node-email-refus",
@@ -307,7 +272,7 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
       "position": [
-        340,
+        380,
         520
       ],
       "id": "node-rep-ko",
@@ -332,39 +297,21 @@
     },
     {
       "parameters": {
-        "operation": "read",
-        "fileSelector": "/tmp/dj_ali_dates.json",
-        "fileName": "/tmp/dj_ali_dates.json",
-        "dataPropertyName": "data",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.readWriteFile",
-      "typeVersion": 1,
-      "position": [
-        -160,
-        740
-      ],
-      "id": "node-read-site",
-      "name": "Lire Dates du Fichier",
-      "continueOnFail": true
-    },
-    {
-      "parameters": {
-        "jsCode": "let dates = [];\ntry {\n  const b64 = $input.first().binary?.data?.data;\n  if (b64) {\n    dates = JSON.parse(Buffer.from(b64, 'base64').toString('utf-8'));\n  }\n} catch (e) {}\nreturn [{ json: dates }];"
+        "jsCode": "let dates = [];\n\n// 1. Depuis staticData\ntry {\n  const staticData = $getWorkflowStaticData('global');\n  if (Array.isArray(staticData.blockedDates)) {\n    dates = [...staticData.blockedDates];\n  }\n} catch (e) {}\n\n// 2. Depuis fichier /tmp si disponible\ntry {\n  const fs = require('fs');\n  const p = '/tmp/dj_ali_dates.json';\n  if (fs.existsSync(p)) {\n    const fileDates = JSON.parse(fs.readFileSync(p, 'utf8'));\n    if (Array.isArray(fileDates)) {\n      dates = [...new Set([...dates, ...fileDates])];\n    }\n  }\n} catch (e) {}\n\nreturn [{\n  json: {\n    dates: dates\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        100,
+        -160,
         740
       ],
       "id": "node-code-dates",
-      "name": "Extraire Liste JSON"
+      "name": "Récupérer Dates"
     },
     {
       "parameters": {
         "respondWith": "text",
-        "responseBody": "={{ JSON.stringify($json) }}",
+        "responseBody": "={{ JSON.stringify($json.dates || []) }}",
         "options": {
           "responseHeaders": {
             "entries": [
@@ -383,7 +330,7 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
       "position": [
-        340,
+        120,
         740
       ],
       "id": "node-rep-dates",
@@ -450,7 +397,7 @@
       "main": [
         [
           {
-            "node": "Lire Fichier Local",
+            "node": "Email Confirmation Client",
             "type": "main",
             "index": 0
           }
@@ -464,40 +411,18 @@
         ]
       ]
     },
-    "Lire Fichier Local": {
-      "main": [
-        [
-          {
-            "node": "Ajouter Date au Fichier",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Ajouter Date au Fichier": {
-      "main": [
-        [
-          {
-            "node": "Sauvegarder Fichier Local",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Sauvegarder Fichier Local": {
-      "main": [
-        [
-          {
-            "node": "Email Confirmation Client",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Email Confirmation Client": {
+      "main": [
+        [
+          {
+            "node": "Mémoriser Date",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mémoriser Date": {
       "main": [
         [
           {
@@ -523,25 +448,14 @@
       "main": [
         [
           {
-            "node": "Lire Dates du Fichier",
+            "node": "Récupérer Dates",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Lire Dates du Fichier": {
-      "main": [
-        [
-          {
-            "node": "Extraire Liste JSON",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Extraire Liste JSON": {
+    "Récupérer Dates": {
       "main": [
         [
           {
