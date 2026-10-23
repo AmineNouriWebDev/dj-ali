@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <!-- ============================================================
        META & SEO
@@ -7,8 +8,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DJ Ali — DJ Oriental & Mixte | Nouvelle-Aquitaine</title>
-  <meta name="description" content="DJ Ali, spécialiste des mariages orientaux et mixtes en Nouvelle-Aquitaine. Sonorisation professionnelle, playlists personnalisées pour mariages, fiançailles, baptêmes et anniversaires." />
-  <meta name="keywords" content="DJ Ali, DJ mariage oriental, DJ Nouvelle-Aquitaine, DJ mariage Bordeaux, DJ franco-marocain, DJ franco-tunisien, DJ mixte, animation mariage" />
+  <meta name="description"
+    content="DJ Ali, spécialiste des mariages orientaux et mixtes en Nouvelle-Aquitaine. Sonorisation professionnelle, playlists personnalisées pour mariages, fiançailles, baptêmes et anniversaires." />
+  <meta name="keywords"
+    content="DJ Ali, DJ mariage oriental, DJ Nouvelle-Aquitaine, DJ mariage Bordeaux, DJ franco-marocain, DJ franco-tunisien, DJ mixte, animation mariage" />
   <meta name="author" content="DJ Ali — dj-ali.com" />
   <meta property="og:title" content="DJ Ali — DJ Oriental & Mixte | Nouvelle-Aquitaine" />
   <meta property="og:description" content="L'élégance et l'ambiance festive pour vos mariages orientaux et mixtes." />
@@ -16,11 +19,20 @@
   <meta property="og:url" content="https://dj-ali.com" />
 
   <!-- ============================================================
+       FAVICONS
+  ============================================================ -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png" />
+  <link rel="icon" type="image/png" sizes="500x500" href="assets/favicon-500.png" />
+
+  <!-- ============================================================
        FONTS
   ============================================================ -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;900&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;900&display=swap"
+    rel="stylesheet" />
 
   <!-- TAILWIND CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -67,330 +79,1065 @@
       --dark-border: #1E1E35;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
-    body { background-color: var(--dark); color: #fff; font-family: 'Outfit', sans-serif; overflow-x: hidden; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
 
-    ::-webkit-scrollbar { width: 5px; }
-    ::-webkit-scrollbar-track { background: var(--dark); }
-    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+    body {
+      background-color: var(--dark);
+      color: #fff;
+      font-family: 'Outfit', sans-serif;
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--dark);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--gold);
+      border-radius: 3px;
+    }
 
     /* ── Curseur ── */
     .cursor {
-      width: 24px; height: 24px;
+      width: 24px;
+      height: 24px;
       border: 1.5px solid var(--gold);
       border-radius: 50%;
-      position: fixed; top: 0; left: 0;
-      pointer-events: none; z-index: 9999;
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 9999;
       transition: transform 0.15s ease, background 0.2s;
-      transform: translate(-50%,-50%);
+      transform: translate(-50%, -50%);
     }
+
     .cursor-dot {
-      width: 5px; height: 5px;
-      background: var(--gold); border-radius: 50%;
-      position: fixed; top: 0; left: 0;
-      pointer-events: none; z-index: 9999;
-      transform: translate(-50%,-50%);
+      width: 5px;
+      height: 5px;
+      background: var(--gold);
+      border-radius: 50%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
     }
-    .cursor.hover { transform: translate(-50%,-50%) scale(2.2); background: rgba(201,168,76,0.12); }
+
+    .cursor.hover {
+      transform: translate(-50%, -50%) scale(2.2);
+      background: rgba(201, 168, 76, 0.12);
+    }
 
     /* ── Loader ── */
     #loader {
-      position: fixed; inset: 0; background: #000; z-index: 10000;
-      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.5rem;
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
     }
+
     #loader-logo {
       font-family: 'Bebas Neue', cursive;
       font-size: clamp(3.5rem, 10vw, 7rem);
       letter-spacing: 0.35em;
       background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
       opacity: 0;
     }
-    #loader-subtitle { font-size: 0.65rem; letter-spacing: 0.4em; color: rgba(255,255,255,0.3); text-transform: uppercase; opacity: 0; }
-    #loader-bar { width: 220px; height: 2px; background: var(--dark-border); border-radius: 2px; overflow: hidden; }
-    #loader-bar-inner { height: 100%; width: 0%; background: linear-gradient(90deg, var(--gold), var(--neon-purple)); transition: width 0.06s linear; }
-    #loader-pct { font-size: 0.65rem; color: rgba(255,255,255,0.2); letter-spacing: 0.15em; }
+
+    #loader-subtitle {
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      color: rgba(255, 255, 255, 0.3);
+      text-transform: uppercase;
+      opacity: 0;
+    }
+
+    #loader-bar {
+      width: 220px;
+      height: 2px;
+      background: var(--dark-border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    #loader-bar-inner {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--gold), var(--neon-purple));
+      transition: width 0.06s linear;
+    }
+
+    #loader-pct {
+      font-size: 0.65rem;
+      color: rgba(255, 255, 255, 0.2);
+      letter-spacing: 0.15em;
+    }
 
     /* ── Navbar ── */
-    #navbar { transition: all 0.4s ease; }
+    #navbar {
+      transition: all 0.4s ease;
+    }
+
     #navbar.scrolled {
-      background: rgba(8,8,16,0.88) !important;
-      backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
-      border-bottom: 1px solid rgba(201,168,76,0.12);
-      box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+      background: rgba(8, 8, 16, 0.88) !important;
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.12);
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
     }
+
     .nav-link {
-      position: relative; font-weight: 500; letter-spacing: 0.07em;
-      color: rgba(255,255,255,0.75); transition: color 0.3s; text-decoration: none; font-size: 0.82rem;
+      position: relative;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      color: rgba(255, 255, 255, 0.75);
+      transition: color 0.3s;
+      text-decoration: none;
+      font-size: 0.82rem;
     }
+
     .nav-link::after {
-      content: ''; position: absolute; bottom: -4px; left: 0;
-      width: 0; height: 1px; background: var(--gold); transition: width 0.3s;
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--gold);
+      transition: width 0.3s;
     }
-    .nav-link:hover, .nav-link.active { color: var(--gold); }
-    .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--gold);
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+    }
 
     /* ── Hero ── */
-    #hero { position: relative; height: 100vh; min-height: 620px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-    #hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; filter: brightness(0.35) saturate(1.3); }
-    .hero-bg-img { position: absolute; inset: 0; z-index: 0; background-size: cover; background-position: center; filter: brightness(0.35) saturate(1.2); }
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 620px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    #hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      filter: brightness(0.35) saturate(1.3);
+    }
+
+    .hero-bg-img {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.35) saturate(1.2);
+    }
+
     .hero-overlay {
-      position: absolute; inset: 0; z-index: 1;
-      background: linear-gradient(135deg, rgba(0,0,0,0.88) 0%, rgba(8,8,16,0.55) 50%, rgba(157,78,221,0.12) 100%);
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.88) 0%, rgba(8, 8, 16, 0.55) 50%, rgba(157, 78, 221, 0.12) 100%);
     }
 
     /* Lasers animés hero */
     .laser-beam {
-      position: absolute; height: 1px; z-index: 2;
-      opacity: 0; pointer-events: none;
+      position: absolute;
+      height: 1px;
+      z-index: 2;
+      opacity: 0;
+      pointer-events: none;
     }
-    .laser-beam:nth-child(1) { width: 55%; top: 22%; left: -5%; transform: rotate(-14deg); background: linear-gradient(90deg, transparent, rgba(157,78,221,0.7), transparent); animation: laserAnim 5s ease-in-out 0s infinite; }
-    .laser-beam:nth-child(2) { width: 50%; top: 45%; right: -5%; transform: rotate(18deg); background: linear-gradient(90deg, transparent, rgba(201,168,76,0.6), transparent); animation: laserAnim 5s ease-in-out 1.8s infinite; }
-    .laser-beam:nth-child(3) { width: 40%; top: 65%; left: 15%; transform: rotate(-7deg); background: linear-gradient(90deg, transparent, rgba(76,201,240,0.5), transparent); animation: laserAnim 5s ease-in-out 3.3s infinite; }
+
+    .laser-beam:nth-child(1) {
+      width: 55%;
+      top: 22%;
+      left: -5%;
+      transform: rotate(-14deg);
+      background: linear-gradient(90deg, transparent, rgba(157, 78, 221, 0.7), transparent);
+      animation: laserAnim 5s ease-in-out 0s infinite;
+    }
+
+    .laser-beam:nth-child(2) {
+      width: 50%;
+      top: 45%;
+      right: -5%;
+      transform: rotate(18deg);
+      background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.6), transparent);
+      animation: laserAnim 5s ease-in-out 1.8s infinite;
+    }
+
+    .laser-beam:nth-child(3) {
+      width: 40%;
+      top: 65%;
+      left: 15%;
+      transform: rotate(-7deg);
+      background: linear-gradient(90deg, transparent, rgba(76, 201, 240, 0.5), transparent);
+      animation: laserAnim 5s ease-in-out 3.3s infinite;
+    }
 
     @keyframes laserAnim {
-      0%, 100% { opacity: 0; transform: scaleX(0) rotate(var(--r, 0deg)); }
-      25%, 75% { opacity: 0.65; transform: scaleX(1) rotate(var(--r, 0deg)); }
+
+      0%,
+      100% {
+        opacity: 0;
+        transform: scaleX(0) rotate(var(--r, 0deg));
+      }
+
+      25%,
+      75% {
+        opacity: 0.65;
+        transform: scaleX(1) rotate(var(--r, 0deg));
+      }
     }
 
     /* Particules flottantes */
-    .particle { position: absolute; border-radius: 50%; opacity: 0; animation: floatUp linear infinite; pointer-events: none; }
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0;
+      animation: floatUp linear infinite;
+      pointer-events: none;
+    }
+
     @keyframes floatUp {
-      0% { transform: translateY(110vh) scale(0); opacity: 0; }
-      8% { opacity: 0.9; }
-      92% { opacity: 0.2; }
-      100% { transform: translateY(-5vh) scale(1.2); opacity: 0; }
+      0% {
+        transform: translateY(110vh) scale(0);
+        opacity: 0;
+      }
+
+      8% {
+        opacity: 0.9;
+      }
+
+      92% {
+        opacity: 0.2;
+      }
+
+      100% {
+        transform: translateY(-5vh) scale(1.2);
+        opacity: 0;
+      }
     }
 
     /* Orbes lumineuses */
-    .orb { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.1; pointer-events: none; }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.1;
+      pointer-events: none;
+    }
 
     .hero-title {
       font-family: 'Bebas Neue', cursive;
       font-size: clamp(5.5rem, 20vw, 18rem);
-      letter-spacing: 0.04em; line-height: 0.82;
+      letter-spacing: 0.04em;
+      line-height: 0.82;
       background: linear-gradient(135deg, #fff 0%, var(--gold-light) 35%, var(--gold) 65%, var(--neon-purple) 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-      filter: drop-shadow(0 0 35px rgba(201,168,76,0.45));
-      position: relative; z-index: 3;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 35px rgba(201, 168, 76, 0.45));
+      position: relative;
+      z-index: 3;
     }
-    .hero-sub { font-size: clamp(0.8rem, 2.2vw, 1.2rem); font-weight: 300; letter-spacing: 0.14em; color: rgba(255,255,255,0.82); text-transform: uppercase; }
+
+    .hero-sub {
+      font-size: clamp(0.8rem, 2.2vw, 1.2rem);
+      font-weight: 300;
+      letter-spacing: 0.14em;
+      color: rgba(255, 255, 255, 0.82);
+      text-transform: uppercase;
+    }
 
     /* CTA Buttons */
     .btn-primary {
-      display: inline-flex; align-items: center; gap: 0.55rem;
-      padding: 1rem 2.4rem; font-family: 'Outfit', sans-serif;
-      font-weight: 600; font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase;
-      color: #000; background: linear-gradient(135deg, var(--gold-light), var(--gold));
-      border: none; border-radius: 2px; cursor: pointer;
-      position: relative; overflow: hidden; transition: all 0.35s ease;
-      text-decoration: none; white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 1rem 2.4rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #000;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.35s ease;
+      text-decoration: none;
+      white-space: nowrap;
     }
-    .btn-primary::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, var(--gold), var(--neon-purple)); opacity: 0; transition: opacity 0.35s; }
-    .btn-primary:hover { color: #fff; transform: translateY(-2px); box-shadow: 0 0 40px rgba(201,168,76,0.55), 0 0 70px rgba(201,168,76,0.18); }
-    .btn-primary:hover::before { opacity: 1; }
-    .btn-primary span, .btn-primary i { position: relative; z-index: 1; }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--gold), var(--neon-purple));
+      opacity: 0;
+      transition: opacity 0.35s;
+    }
+
+    .btn-primary:hover {
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 0 40px rgba(201, 168, 76, 0.55), 0 0 70px rgba(201, 168, 76, 0.18);
+    }
+
+    .btn-primary:hover::before {
+      opacity: 1;
+    }
+
+    .btn-primary span,
+    .btn-primary i {
+      position: relative;
+      z-index: 1;
+    }
 
     .btn-ghost {
-      display: inline-flex; align-items: center; gap: 0.55rem;
-      padding: 0.95rem 2.2rem; font-family: 'Outfit', sans-serif;
-      font-weight: 500; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--gold); background: transparent; border: 1px solid rgba(201,168,76,0.4);
-      border-radius: 2px; cursor: pointer; transition: all 0.3s ease; text-decoration: none; white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.95rem 2.2rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 500;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: transparent;
+      border: 1px solid rgba(201, 168, 76, 0.4);
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      white-space: nowrap;
     }
-    .btn-ghost:hover { border-color: var(--gold); background: rgba(201,168,76,0.07); transform: translateY(-2px); }
+
+    .btn-ghost:hover {
+      border-color: var(--gold);
+      background: rgba(201, 168, 76, 0.07);
+      transform: translateY(-2px);
+    }
 
     /* Scroll indicator */
-    .scroll-cue { position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%); z-index: 5; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; animation: cueFloat 2.5s ease-in-out infinite; }
-    .scroll-cue span { font-size: 0.6rem; letter-spacing: 0.25em; color: rgba(255,255,255,0.3); text-transform: uppercase; }
-    .mouse-wrap { width: 22px; height: 34px; border: 1.5px solid rgba(255,255,255,0.25); border-radius: 12px; position: relative; }
-    .mouse-wrap::after { content: ''; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); width: 3px; height: 6px; background: var(--gold); border-radius: 2px; animation: mouseScroll 1.8s ease-in-out infinite; }
-    @keyframes mouseScroll { 0% { top: 6px; opacity: 1; } 80% { top: 18px; opacity: 0; } 100% { top: 6px; opacity: 0; } }
-    @keyframes cueFloat { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-8px); } }
+    .scroll-cue {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      animation: cueFloat 2.5s ease-in-out infinite;
+    }
+
+    .scroll-cue span {
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      color: rgba(255, 255, 255, 0.3);
+      text-transform: uppercase;
+    }
+
+    .mouse-wrap {
+      width: 22px;
+      height: 34px;
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
+      border-radius: 12px;
+      position: relative;
+    }
+
+    .mouse-wrap::after {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 3px;
+      height: 6px;
+      background: var(--gold);
+      border-radius: 2px;
+      animation: mouseScroll 1.8s ease-in-out infinite;
+    }
+
+    @keyframes mouseScroll {
+      0% {
+        top: 6px;
+        opacity: 1;
+      }
+
+      80% {
+        top: 18px;
+        opacity: 0;
+      }
+
+      100% {
+        top: 6px;
+        opacity: 0;
+      }
+    }
+
+    @keyframes cueFloat {
+
+      0%,
+      100% {
+        transform: translateX(-50%) translateY(0);
+      }
+
+      50% {
+        transform: translateX(-50%) translateY(-8px);
+      }
+    }
 
     /* Badges région */
     .region-pill {
-      display: inline-flex; align-items: center; gap: 0.4rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
       padding: 0.3rem 0.85rem;
-      background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.25);
-      border-radius: 100px; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold);
+      background: rgba(201, 168, 76, 0.07);
+      border: 1px solid rgba(201, 168, 76, 0.25);
+      border-radius: 100px;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
     }
 
     /* Section tags */
     .sec-tag {
-      display: inline-flex; align-items: center; gap: 0.45rem;
-      font-size: 0.68rem; letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold); font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
     }
-    .sec-tag::before, .sec-tag::after { content: ''; display: inline-block; width: 28px; height: 1px; background: var(--gold); }
+
+    .sec-tag::before,
+    .sec-tag::after {
+      content: '';
+      display: inline-block;
+      width: 28px;
+      height: 1px;
+      background: var(--gold);
+    }
 
     .sec-title {
       font-family: 'Bebas Neue', cursive;
       font-size: clamp(3rem, 7vw, 5.5rem);
-      letter-spacing: 0.05em; line-height: 1;
+      letter-spacing: 0.05em;
+      line-height: 1;
       background: linear-gradient(135deg, #fff 30%, var(--gold));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .deco-line { width: 55px; height: 2px; background: linear-gradient(90deg, var(--gold), var(--neon-purple)); border-radius: 2px; }
-    .hr-grd { border: none; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.25), transparent); }
+    .deco-line {
+      width: 55px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--neon-purple));
+      border-radius: 2px;
+    }
+
+    .hr-grd {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.25), transparent);
+    }
 
     /* Stats */
-    .stat-cell { text-align: center; padding: 1.8rem 1rem; border-right: 1px solid var(--dark-border); }
-    .stat-cell:last-child { border-right: none; }
+    .stat-cell {
+      text-align: center;
+      padding: 1.8rem 1rem;
+      border-right: 1px solid var(--dark-border);
+    }
+
+    .stat-cell:last-child {
+      border-right: none;
+    }
+
     .stat-num {
-      font-family: 'Bebas Neue', cursive; font-size: clamp(2.8rem, 5vw, 3.8rem);
+      font-family: 'Bebas Neue', cursive;
+      font-size: clamp(2.8rem, 5vw, 3.8rem);
       background: linear-gradient(135deg, var(--gold-light), var(--gold));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
       letter-spacing: 0.05em;
     }
-    .stat-lbl { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-top: 0.3rem; }
-    @media (max-width: 767px) { .stat-cell { border-right: none; border-bottom: 1px solid var(--dark-border); } .stat-cell:last-child { border-bottom: none; } }
+
+    .stat-lbl {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.4);
+      margin-top: 0.3rem;
+    }
+
+    @media (max-width: 767px) {
+      .stat-cell {
+        border-right: none;
+        border-bottom: 1px solid var(--dark-border);
+      }
+
+      .stat-cell:last-child {
+        border-bottom: none;
+      }
+    }
 
     /* Service cards */
     .svc-card {
-      background: var(--dark-card); border: 1px solid var(--dark-border);
-      padding: 2rem 1.8rem; border-radius: 4px; position: relative; overflow: hidden;
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
+      padding: 2rem 1.8rem;
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
       transition: all 0.4s ease;
     }
+
     .svc-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
       background: linear-gradient(90deg, var(--gold), var(--neon-purple));
-      transform: scaleX(0); transform-origin: left; transition: transform 0.4s;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s;
     }
-    .svc-card:hover { transform: translateY(-7px); border-color: rgba(201,168,76,0.28); box-shadow: 0 24px 60px rgba(0,0,0,0.55), 0 0 35px rgba(201,168,76,0.07); }
-    .svc-card:hover::before { transform: scaleX(1); }
+
+    .svc-card:hover {
+      transform: translateY(-7px);
+      border-color: rgba(201, 168, 76, 0.28);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), 0 0 35px rgba(201, 168, 76, 0.07);
+    }
+
+    .svc-card:hover::before {
+      transform: scaleX(1);
+    }
+
     .svc-icon {
-      width: 54px; height: 54px; border-radius: 50%;
-      background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.18);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.4rem; color: var(--gold); margin-bottom: 1.2rem; transition: all 0.3s;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: rgba(201, 168, 76, 0.08);
+      border: 1px solid rgba(201, 168, 76, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+      transition: all 0.3s;
     }
-    .svc-card:hover .svc-icon { background: rgba(201,168,76,0.15); box-shadow: 0 0 22px rgba(201,168,76,0.3); }
+
+    .svc-card:hover .svc-icon {
+      background: rgba(201, 168, 76, 0.15);
+      box-shadow: 0 0 22px rgba(201, 168, 76, 0.3);
+    }
 
     /* Portrait wrapper */
-    .portrait-wrap { position: relative; }
-    .portrait-wrap::before {
-      content: ''; position: absolute; inset: -2px; border-radius: 4px;
-      background: linear-gradient(135deg, var(--gold), rgba(0,0,0,0), var(--neon-purple)); z-index: -1;
+    .portrait-wrap {
+      position: relative;
     }
-    .portrait-wrap img { border-radius: 3px; display: block; width: 100%; }
-    .portrait-glow { position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); width: 75%; height: 50px; background: radial-gradient(ellipse, rgba(201,168,76,0.4) 0%, transparent 70%); filter: blur(14px); z-index: -1; }
+
+    .portrait-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 4px;
+      background: linear-gradient(135deg, var(--gold), rgba(0, 0, 0, 0), var(--neon-purple));
+      z-index: -1;
+    }
+
+    .portrait-wrap img {
+      border-radius: 3px;
+      display: block;
+      width: 100%;
+    }
+
+    .portrait-glow {
+      position: absolute;
+      bottom: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 75%;
+      height: 50px;
+      background: radial-gradient(ellipse, rgba(201, 168, 76, 0.4) 0%, transparent 70%);
+      filter: blur(14px);
+      z-index: -1;
+    }
 
     /* Float badge */
     .float-badge {
-      position: absolute; border-radius: 12px;
-      background: rgba(14,14,26,0.95); border: 1px solid rgba(201,168,76,0.2);
-      backdrop-filter: blur(12px); padding: 0.9rem 1.2rem;
+      position: absolute;
+      border-radius: 12px;
+      background: rgba(14, 14, 26, 0.95);
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      backdrop-filter: blur(12px);
+      padding: 0.9rem 1.2rem;
       animation: badgeFloat 5s ease-in-out infinite;
     }
-    @keyframes badgeFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+    @keyframes badgeFloat {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
 
     /* Video grid */
-    .vid-card { position: relative; border-radius: 4px; overflow: hidden; cursor: pointer; }
-    .vid-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease, filter 0.4s; filter: brightness(0.65) saturate(1.1); }
-    .vid-card:hover img { transform: scale(1.08); filter: brightness(0.45) saturate(1.4); }
-    .vid-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 55%); transition: background 0.4s; }
-    .vid-card:hover .vid-overlay { background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(157,78,221,0.18) 100%); }
-    .play-icon {
-      position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%,-50%) scale(0.75);
-      width: 62px; height: 62px; border-radius: 50%;
-      background: rgba(201,168,76,0.92);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.25rem; color: #000;
-      opacity: 0; transition: all 0.35s ease;
-      box-shadow: 0 0 30px rgba(201,168,76,0.55);
+    .vid-card {
+      position: relative;
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: pointer;
     }
-    .vid-card:hover .play-icon { opacity: 1; transform: translate(-50%,-50%) scale(1); }
-    .vid-lbl { position: absolute; bottom: 0; left: 0; right: 0; padding: 1rem 1.2rem; transform: translateY(100%); transition: transform 0.4s; }
-    .vid-card:hover .vid-lbl { transform: translateY(0); }
+
+    .vid-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease, filter 0.4s;
+      filter: brightness(0.65) saturate(1.1);
+    }
+
+    .vid-card:hover img {
+      transform: scale(1.08);
+      filter: brightness(0.45) saturate(1.4);
+    }
+
+    .vid-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 55%);
+      transition: background 0.4s;
+    }
+
+    .vid-card:hover .vid-overlay {
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(157, 78, 221, 0.18) 100%);
+    }
+
+    .play-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.75);
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      background: rgba(201, 168, 76, 0.92);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      color: #000;
+      opacity: 0;
+      transition: all 0.35s ease;
+      box-shadow: 0 0 30px rgba(201, 168, 76, 0.55);
+    }
+
+    .vid-card:hover .play-icon {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .vid-lbl {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1rem 1.2rem;
+      transform: translateY(100%);
+      transition: transform 0.4s;
+    }
+
+    .vid-card:hover .vid-lbl {
+      transform: translateY(0);
+    }
 
     /* Testimonials */
     .testi-card {
-      background: var(--dark-card); border: 1px solid var(--dark-border);
-      border-radius: 16px; padding: 1.6rem; position: relative; overflow: hidden;
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
+      border-radius: 16px;
+      padding: 1.6rem;
+      position: relative;
+      overflow: hidden;
     }
+
     .testi-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
       background: linear-gradient(90deg, var(--neon-purple), var(--gold), var(--neon-blue));
     }
+
     .bubble {
       background: linear-gradient(135deg, #1877F2, #0A5FCC);
       border-radius: 18px 18px 18px 5px;
-      padding: 0.85rem 1.1rem; font-size: 0.88rem; line-height: 1.65; color: #fff;
-      margin-bottom: 0.65rem; max-width: 92%;
+      padding: 0.85rem 1.1rem;
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: #fff;
+      margin-bottom: 0.65rem;
+      max-width: 92%;
     }
-    .bubble.wa { background: linear-gradient(135deg, #128C7E, #25D366); }
-    .tstamp { font-size: 0.65rem; color: rgba(255,255,255,0.3); text-align: center; margin-bottom: 0.75rem; letter-spacing: 0.05em; }
-    .stars { color: #F59E0B; letter-spacing: 2px; }
+
+    .bubble.wa {
+      background: linear-gradient(135deg, #128C7E, #25D366);
+    }
+
+    .tstamp {
+      font-size: 0.65rem;
+      color: rgba(255, 255, 255, 0.3);
+      text-align: center;
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    .stars {
+      color: #F59E0B;
+      letter-spacing: 2px;
+    }
 
     /* Swiper nav custom */
-    .swiper-pagination-bullet { background: var(--dark-border) !important; opacity: 1 !important; }
-    .swiper-pagination-bullet-active { background: var(--gold) !important; }
-    .swiper-button-next, .swiper-button-prev { color: var(--gold) !important; }
+    .swiper-pagination-bullet {
+      background: var(--dark-border) !important;
+      opacity: 1 !important;
+    }
+
+    .swiper-pagination-bullet-active {
+      background: var(--gold) !important;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+      color: var(--gold) !important;
+    }
 
     /* Reservation form */
-    .frm-label { display: block; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 0.4rem; font-weight: 500; }
-    .frm-input {
-      width: 100%; background: rgba(255,255,255,0.035); border: 1px solid var(--dark-border);
-      border-radius: 3px; padding: 0.85rem 1rem; font-family: 'Outfit', sans-serif; font-size: 0.9rem;
-      color: #fff; transition: all 0.3s; outline: none;
+    .frm-label {
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.45);
+      margin-bottom: 0.4rem;
+      font-weight: 500;
     }
-    .frm-input:focus { border-color: rgba(201,168,76,0.5); background: rgba(201,168,76,0.035); box-shadow: 0 0 0 3px rgba(201,168,76,0.08); }
-    .frm-input::placeholder { color: rgba(255,255,255,0.22); }
-    select.frm-input option { background: #0E0E1A; }
+
+    .frm-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid var(--dark-border);
+      border-radius: 3px;
+      padding: 0.85rem 1rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.9rem;
+      color: #fff;
+      transition: all 0.3s;
+      outline: none;
+    }
+
+    .frm-input:focus {
+      border-color: rgba(201, 168, 76, 0.5);
+      background: rgba(201, 168, 76, 0.035);
+      box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.08);
+    }
+
+    .frm-input::placeholder {
+      color: rgba(255, 255, 255, 0.22);
+    }
+
+    select.frm-input option {
+      background: #0E0E1A;
+    }
 
     /* Flatpickr dark */
-    .flatpickr-calendar { background: var(--dark-card) !important; border: 1px solid var(--dark-border) !important; border-radius: 10px !important; box-shadow: 0 20px 60px rgba(0,0,0,0.85) !important; font-family: 'Outfit', sans-serif !important; }
-    .flatpickr-day { color: rgba(255,255,255,0.75) !important; border-radius: 4px !important; }
-    .flatpickr-day:hover { background: rgba(201,168,76,0.14) !important; border-color: var(--gold) !important; color: var(--gold) !important; }
-    .flatpickr-day.selected, .flatpickr-day.selected:hover { background: var(--gold) !important; border-color: var(--gold) !important; color: #000 !important; font-weight: 700; }
-    .flatpickr-day.flatpickr-disabled { color: rgba(255,255,255,0.15) !important; background: rgba(247,37,133,0.06) !important; text-decoration: line-through; }
-    .flatpickr-months { background: transparent !important; }
-    .flatpickr-current-month { color: var(--gold) !important; font-weight: 600; }
-    .flatpickr-weekday { color: rgba(255,255,255,0.38) !important; }
-    .flatpickr-prev-month svg, .flatpickr-next-month svg { fill: var(--gold) !important; }
-    .numInputWrapper input { color: var(--gold) !important; }
+    .flatpickr-calendar {
+      background: var(--dark-card) !important;
+      border: 1px solid var(--dark-border) !important;
+      border-radius: 10px !important;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85) !important;
+      font-family: 'Outfit', sans-serif !important;
+    }
+
+    .flatpickr-day {
+      color: rgba(255, 255, 255, 0.75) !important;
+      border-radius: 4px !important;
+    }
+
+    .flatpickr-day:hover {
+      background: rgba(201, 168, 76, 0.14) !important;
+      border-color: var(--gold) !important;
+      color: var(--gold) !important;
+    }
+
+    .flatpickr-day.selected,
+    .flatpickr-day.selected:hover {
+      background: var(--gold) !important;
+      border-color: var(--gold) !important;
+      color: #000 !important;
+      font-weight: 700;
+    }
+
+    .flatpickr-day.flatpickr-disabled {
+      color: rgba(255, 255, 255, 0.15) !important;
+      background: rgba(247, 37, 133, 0.06) !important;
+      text-decoration: line-through;
+    }
+
+    .flatpickr-months {
+      background: transparent !important;
+    }
+
+    .flatpickr-current-month {
+      color: var(--gold) !important;
+      font-weight: 600;
+    }
+
+    .flatpickr-weekday {
+      color: rgba(255, 255, 255, 0.38) !important;
+    }
+
+    .flatpickr-prev-month svg,
+    .flatpickr-next-month svg {
+      fill: var(--gold) !important;
+    }
+
+    .numInputWrapper input {
+      color: var(--gold) !important;
+    }
 
     /* Glass card */
-    .glass { background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.06); backdrop-filter: blur(10px); border-radius: 10px; }
+    .glass {
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(10px);
+      border-radius: 10px;
+    }
 
     /* Footer */
-    .foot-link { color: rgba(255,255,255,0.45); transition: color 0.3s; text-decoration: none; font-size: 0.85rem; }
-    .foot-link:hover { color: var(--gold); }
-    .soc-btn {
-      width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--dark-border);
-      display: flex; align-items: center; justify-content: center;
-      color: rgba(255,255,255,0.45); transition: all 0.3s; text-decoration: none; font-size: 0.95rem;
+    .foot-link {
+      color: rgba(255, 255, 255, 0.45);
+      transition: color 0.3s;
+      text-decoration: none;
+      font-size: 0.85rem;
     }
-    .soc-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.07); box-shadow: 0 0 18px rgba(201,168,76,0.2); transform: translateY(-3px); }
+
+    .foot-link:hover {
+      color: var(--gold);
+    }
+
+    .soc-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid var(--dark-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, 0.45);
+      transition: all 0.3s;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .soc-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(201, 168, 76, 0.07);
+      box-shadow: 0 0 18px rgba(201, 168, 76, 0.2);
+      transform: translateY(-3px);
+    }
 
     /* Toast */
     #toast {
-      position: fixed; bottom: 2rem; right: 2rem; z-index: 9999;
-      padding: 1rem 1.5rem; border-radius: 4px; font-weight: 600; font-size: 0.84rem;
-      display: flex; align-items: center; gap: 0.55rem;
-      transform: translateY(120px); opacity: 0; transition: all 0.4s ease;
+      position: fixed;
+      bottom: 95px;
+      right: 24px;
+      z-index: 9999;
+      padding: 1rem 1.5rem;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.84rem;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      transform: translateY(120px);
+      opacity: 0;
+      transition: all 0.4s ease;
     }
-    #toast.show { transform: translateY(0); opacity: 1; }
+
+    #toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* WhatsApp Bouton Flottant */
+    .wa-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9990;
+      width: 58px;
+      height: 58px;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: #fff !important;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 30px rgba(37, 211, 102, 0.45);
+      transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      text-decoration: none;
+    }
+
+    .wa-float:hover {
+      transform: scale(1.1) translateY(-3px);
+      box-shadow: 0 12px 35px rgba(37, 211, 102, 0.65);
+    }
+
+    .wa-float::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 2px solid rgba(37, 211, 102, 0.5);
+      animation: waPulse 2s infinite;
+      pointer-events: none;
+    }
+
+    @keyframes waPulse {
+      0% {
+        transform: scale(1);
+        opacity: 0.8;
+      }
+      100% {
+        transform: scale(1.4);
+        opacity: 0;
+      }
+    }
+
+    .wa-tooltip {
+      position: absolute;
+      right: 70px;
+      background: rgba(14, 14, 26, 0.95);
+      color: #fff;
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateX(10px);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(201, 168, 76, 0.25);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .wa-float:hover .wa-tooltip {
+      opacity: 1;
+      transform: translateX(0);
+    }
 
     /* Mobile menu */
-    #mobile-menu { background: rgba(8,8,16,0.97); backdrop-filter: blur(20px); }
+    #mobile-menu {
+      background: rgba(8, 8, 16, 0.97);
+      backdrop-filter: blur(20px);
+    }
 
     /* Typewriter cursor */
     .tw-cursor {
-      display: inline-block; width: 2px; height: 1em;
-      background: var(--gold); margin-left: 2px; vertical-align: middle;
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      background: var(--gold);
+      margin-left: 2px;
+      vertical-align: middle;
       animation: blink 0.75s step-end infinite;
     }
-    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0;
+      }
+    }
 
     @media (max-width: 768px) {
-      .hero-title { font-size: clamp(4.5rem, 24vw, 8rem); }
-      .sec-title { font-size: clamp(2.5rem, 10vw, 4rem); }
+      .hero-title {
+        font-size: clamp(4.5rem, 24vw, 8rem);
+      }
+
+      .sec-title {
+        font-size: clamp(2.5rem, 10vw, 4rem);
+      }
     }
   </style>
 </head>
+
 <body class="antialiased">
 
   <!-- Curseur (desktop only) -->
@@ -403,12 +1150,21 @@
   <div id="loader">
     <div id="loader-logo">DJ ALI</div>
     <div id="loader-subtitle">DJ Nouvelle-Aquitaine</div>
-    <div id="loader-bar"><div id="loader-bar-inner"></div></div>
+    <div id="loader-bar">
+      <div id="loader-bar-inner"></div>
+    </div>
     <div id="loader-pct">0%</div>
   </div>
 
   <!-- Toast notification -->
   <div id="toast"><i id="toast-icon" class="fas fa-check-circle"></i><span id="toast-msg">Envoyé !</span></div>
+
+  <!-- Bouton WhatsApp Flottant -->
+  <a href="https://wa.me/33618410680?text=Bonjour%20DJ%20Ali%2C%20je%20souhaite%20des%20informations%20pour%20une%20prestation."
+    target="_blank" rel="noopener noreferrer" class="wa-float" aria-label="Contacter DJ Ali sur WhatsApp">
+    <i class="fab fa-whatsapp text-3xl"></i>
+    <span class="wa-tooltip font-medium">💬 Échanger sur WhatsApp</span>
+  </a>
 
   <!-- ==============================
        NAVBAR
@@ -418,8 +1174,11 @@
 
       <!-- Logo -->
       <a href="#hero" class="flex flex-col leading-none" aria-label="DJ Ali - Retour accueil">
-        <span class="font-bebas text-3xl tracking-widest" style="background: linear-gradient(135deg,var(--gold-light),var(--gold)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">DJ ALI</span>
-        <span class="text-[0.5rem] tracking-[0.32em] uppercase text-gold/60" style="-webkit-text-fill-color:initial; color:rgba(201,168,76,0.6);">Nouvelle-Aquitaine</span>
+        <span class="font-bebas text-3xl tracking-widest"
+          style="background: linear-gradient(135deg,var(--gold-light),var(--gold)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">DJ
+          ALI</span>
+        <span class="text-[0.5rem] tracking-[0.32em] uppercase text-gold/60"
+          style="-webkit-text-fill-color:initial; color:rgba(201,168,76,0.6);">Nouvelle-Aquitaine</span>
       </a>
 
       <!-- Nav desktop -->
@@ -434,7 +1193,8 @@
 
       <!-- Téléphone + CTA -->
       <div class="hidden lg:flex items-center gap-5">
-        <a href="tel:0618410680" class="text-xs text-white/45 hover:text-gold transition-colors flex items-center gap-2">
+        <a href="tel:0618410680"
+          class="text-xs text-white/45 hover:text-gold transition-colors flex items-center gap-2">
           <i class="fas fa-phone text-gold text-xs"></i> 06 18 41 06 80
         </a>
         <a href="#booking" class="btn-primary text-xs py-3 px-5">
@@ -452,14 +1212,23 @@
   </header>
 
   <!-- Menu mobile -->
-  <div id="mobile-menu" class="fixed inset-0 z-40 flex flex-col items-center justify-center gap-7 opacity-0 pointer-events-none transition-opacity duration-400" aria-hidden="true">
-    <a href="#hero" class="mnav font-bebas text-5xl tracking-widest text-white hover:text-gold transition-colors">Accueil</a>
-    <a href="#about" class="mnav font-bebas text-5xl tracking-widest text-white hover:text-gold transition-colors">À Propos</a>
-    <a href="#videos" class="mnav font-bebas text-5xl tracking-widest text-white hover:text-gold transition-colors">Vidéos</a>
-    <a href="#testimonials" class="mnav font-bebas text-5xl tracking-widest text-white hover:text-gold transition-colors">Témoignages</a>
-    <a href="#booking" class="mnav font-bebas text-5xl tracking-widest text-white hover:text-gold transition-colors">Réservation</a>
-    <a href="#contact" class="mnav font-bebas text-5xl tracking-widest text-white hover:text-gold transition-colors">Contact</a>
-    <a href="tel:0618410680" class="mt-4 text-gold/70 text-sm flex items-center gap-2"><i class="fas fa-phone"></i>06 18 41 06 80</a>
+  <div id="mobile-menu"
+    class="fixed inset-0 z-40 flex flex-col items-center justify-center gap-7 opacity-0 pointer-events-none transition-opacity duration-400"
+    aria-hidden="true">
+    <a href="#hero"
+      class="mnav font-bebas text-5xl tracking-widest text-white hover:text-gold transition-colors">Accueil</a>
+    <a href="#about" class="mnav font-bebas text-5xl tracking-widest text-white hover:text-gold transition-colors">À
+      Propos</a>
+    <a href="#videos"
+      class="mnav font-bebas text-5xl tracking-widest text-white hover:text-gold transition-colors">Vidéos</a>
+    <a href="#testimonials"
+      class="mnav font-bebas text-5xl tracking-widest text-white hover:text-gold transition-colors">Témoignages</a>
+    <a href="#booking"
+      class="mnav font-bebas text-5xl tracking-widest text-white hover:text-gold transition-colors">Réservation</a>
+    <a href="#contact"
+      class="mnav font-bebas text-5xl tracking-widest text-white hover:text-gold transition-colors">Contact</a>
+    <a href="tel:0618410680" class="mt-4 text-gold/70 text-sm flex items-center gap-2"><i class="fas fa-phone"></i>06 18
+      41 06 80</a>
   </div>
 
   <!-- ==============================
@@ -483,8 +1252,10 @@
     <div class="laser-beam" aria-hidden="true"></div>
 
     <!-- Orbes -->
-    <div class="orb" style="width:700px;height:700px;background:var(--neon-purple);top:-200px;right:-200px;" aria-hidden="true"></div>
-    <div class="orb" style="width:450px;height:450px;background:var(--gold);bottom:-100px;left:-100px;" aria-hidden="true"></div>
+    <div class="orb" style="width:700px;height:700px;background:var(--neon-purple);top:-200px;right:-200px;"
+      aria-hidden="true"></div>
+    <div class="orb" style="width:450px;height:450px;background:var(--gold);bottom:-100px;left:-100px;"
+      aria-hidden="true"></div>
 
     <!-- Particules générées par JS -->
     <div id="particles" aria-hidden="true"></div>
@@ -496,13 +1267,17 @@
         <span class="region-pill"><i class="fas fa-map-marker-alt text-xs"></i> Nouvelle-Aquitaine · France</span>
       </div>
 
-      <h1 class="hero-title hero-el opacity-0">DJ<br/>ALI</h1>
+      <h1 class="hero-title hero-el opacity-0">DJ<br />ALI</h1>
 
       <!-- Séparateur doré -->
       <div class="hero-el opacity-0 flex items-center justify-center gap-4 my-6">
-        <div style="flex:1; max-width:90px; height:1px; background:linear-gradient(90deg,transparent,rgba(201,168,76,0.6));"></div>
+        <div
+          style="flex:1; max-width:90px; height:1px; background:linear-gradient(90deg,transparent,rgba(201,168,76,0.6));">
+        </div>
         <i class="fas fa-compact-disc text-gold text-sm animate-spin" style="animation-duration:8s;"></i>
-        <div style="flex:1; max-width:90px; height:1px; background:linear-gradient(90deg,rgba(201,168,76,0.6),transparent);"></div>
+        <div
+          style="flex:1; max-width:90px; height:1px; background:linear-gradient(90deg,rgba(201,168,76,0.6),transparent);">
+        </div>
       </div>
 
       <!-- Sous-titre typewriter -->
@@ -542,7 +1317,8 @@
   <!-- ==============================
        STATS BANNER
   ============================== -->
-  <div style="background:linear-gradient(135deg,rgba(14,14,26,0.97),rgba(8,8,16,0.99)); border-top:1px solid var(--dark-border); border-bottom:1px solid var(--dark-border);">
+  <div
+    style="background:linear-gradient(135deg,rgba(14,14,26,0.97),rgba(8,8,16,0.99)); border-top:1px solid var(--dark-border); border-bottom:1px solid var(--dark-border);">
     <div class="max-w-5xl mx-auto">
       <div class="grid grid-cols-2 md:grid-cols-4" id="stats-grid">
         <div class="stat-cell" data-aos="fade-up" data-aos-delay="0">
@@ -569,13 +1345,15 @@
        À PROPOS & SERVICES
   ============================== -->
   <section id="about" class="relative py-28 px-6 overflow-hidden" aria-label="À propos de DJ Ali">
-    <div class="orb" style="width:500px;height:500px;background:var(--neon-purple);top:50%;left:-200px;transform:translateY(-50%);"></div>
+    <div class="orb"
+      style="width:500px;height:500px;background:var(--neon-purple);top:50%;left:-200px;transform:translateY(-50%);">
+    </div>
 
     <div class="max-w-7xl mx-auto">
       <!-- En-tête -->
       <div class="text-center mb-18" data-aos="fade-up">
         <span class="sec-tag">L'Artiste</span>
-        <h2 class="sec-title mt-3">À Propos<br/>& Services</h2>
+        <h2 class="sec-title mt-3">À Propos<br />& Services</h2>
         <div class="deco-line mx-auto mt-5"></div>
       </div>
 
@@ -585,13 +1363,15 @@
         <!-- Portrait -->
         <div class="lg:col-span-2" data-aos="fade-right">
           <div class="portrait-wrap max-w-sm mx-auto lg:mx-0">
-            <img src="assets/dj-ali-portrait.jpg" alt="DJ Ali derrière ses platines Pioneer lors d'un mariage" class="aspect-[3/4] object-cover object-top" />
+            <img src="assets/dj-ali-portrait.jpg" alt="DJ Ali derrière ses platines Pioneer lors d'un mariage"
+              class="aspect-[3/4] object-cover object-top" />
             <div class="portrait-glow"></div>
           </div>
           <!-- Badge flottant -->
           <div class="float-badge" style="bottom:-20px; right:0px;">
             <div class="flex items-center gap-3">
-              <div class="w-9 h-9 rounded-full flex items-center justify-center" style="background:rgba(201,168,76,0.1);">
+              <div class="w-9 h-9 rounded-full flex items-center justify-center"
+                style="background:rgba(201,168,76,0.1);">
                 <i class="fas fa-star text-gold text-sm"></i>
               </div>
               <div>
@@ -604,29 +1384,40 @@
 
         <!-- Texte -->
         <div class="lg:col-span-3 space-y-6" data-aos="fade-left" data-aos-delay="150">
-          <p class="text-xs tracking-widest uppercase font-medium" style="color:rgba(201,168,76,0.7);">DJ Oriental & Mixte — Nouvelle-Aquitaine</p>
+          <p class="text-xs tracking-widest uppercase font-medium" style="color:rgba(201,168,76,0.7);">DJ Oriental &
+            Mixte — Nouvelle-Aquitaine</p>
           <h3 class="font-bebas text-4xl lg:text-5xl text-white leading-tight">
-            L'Ambiance Parfaite<br/>
+            L'Ambiance Parfaite<br />
             <span style="color:var(--gold);">Pour Chaque Soirée</span>
           </h3>
           <p class="leading-relaxed text-sm lg:text-base" style="color:rgba(255,255,255,0.62);">
-            Passionné de musique depuis plus de <strong style="color:var(--gold);">12 ans</strong>, DJ Ali est le spécialiste 
-            incontournable des mariages orientaux et mixtes en <strong style="color:rgba(255,255,255,0.85);">Nouvelle-Aquitaine</strong>. 
-            Franco-Marocain, Franco-Tunisien, Franco-Algérien ou toute autre mixité — DJ Ali maîtrise l'art 
-            de fusionner les répertoires pour créer une soirée inoubliable qui unit <strong style="color:rgba(255,255,255,0.85);">toutes les générations</strong>.
+            Passionné de musique depuis plus de <strong style="color:var(--gold);">12 ans</strong>, DJ Ali est le
+            spécialiste
+            incontournable des mariages orientaux et mixtes en <strong
+              style="color:rgba(255,255,255,0.85);">Nouvelle-Aquitaine</strong>.
+            Franco-Marocain, Franco-Tunisien, Franco-Algérien ou toute autre mixité — DJ Ali maîtrise l'art
+            de fusionner les répertoires pour créer une soirée inoubliable qui unit <strong
+              style="color:rgba(255,255,255,0.85);">toutes les générations</strong>.
           </p>
           <p class="leading-relaxed text-sm lg:text-base" style="color:rgba(255,255,255,0.62);">
-            Chaque prestation est <strong style="color:rgba(255,255,255,0.85);">entièrement personnalisée</strong> : le programme est co-construit 
-            avec les mariés en amont — choix des musiques, moments forts, entrée des mariés, ambiances... 
+            Chaque prestation est <strong style="color:rgba(255,255,255,0.85);">entièrement personnalisée</strong> : le
+            programme est co-construit
+            avec les mariés en amont — choix des musiques, moments forts, entrée des mariés, ambiances...
             Rien n'est laissé au hasard pour que votre soirée soit exactement celle dont vous avez rêvé.
           </p>
 
           <div class="flex flex-wrap gap-2 pt-2">
-            <span class="text-xs px-3 py-1.5 rounded-sm" style="border:1px solid rgba(201,168,76,0.2); color:rgba(201,168,76,0.7);">Mariage Oriental</span>
-            <span class="text-xs px-3 py-1.5 rounded-sm" style="border:1px solid rgba(201,168,76,0.2); color:rgba(201,168,76,0.7);">Mariage Mixte</span>
-            <span class="text-xs px-3 py-1.5 rounded-sm" style="border:1px solid rgba(201,168,76,0.2); color:rgba(201,168,76,0.7);">Pioneer DJ Pro</span>
-            <span class="text-xs px-3 py-1.5 rounded-sm" style="border:1px solid rgba(201,168,76,0.2); color:rgba(201,168,76,0.7);">Sonorisation Haut de Gamme</span>
-            <span class="text-xs px-3 py-1.5 rounded-sm" style="border:1px solid rgba(201,168,76,0.2); color:rgba(201,168,76,0.7);">Toute la France</span>
+            <span class="text-xs px-3 py-1.5 rounded-sm"
+              style="border:1px solid rgba(201,168,76,0.2); color:rgba(201,168,76,0.7);">Mariage Oriental</span>
+            <span class="text-xs px-3 py-1.5 rounded-sm"
+              style="border:1px solid rgba(201,168,76,0.2); color:rgba(201,168,76,0.7);">Mariage Mixte</span>
+            <span class="text-xs px-3 py-1.5 rounded-sm"
+              style="border:1px solid rgba(201,168,76,0.2); color:rgba(201,168,76,0.7);">Pioneer DJ Pro</span>
+            <span class="text-xs px-3 py-1.5 rounded-sm"
+              style="border:1px solid rgba(201,168,76,0.2); color:rgba(201,168,76,0.7);">Sonorisation Haut de
+              Gamme</span>
+            <span class="text-xs px-3 py-1.5 rounded-sm"
+              style="border:1px solid rgba(201,168,76,0.2); color:rgba(201,168,76,0.7);">Toute la France</span>
           </div>
 
           <div class="pt-2">
@@ -644,7 +1435,8 @@
           <div class="svc-icon"><i class="fas fa-volume-up"></i></div>
           <h4 class="font-semibold text-white mb-2">Sonorisation Professionnelle</h4>
           <p class="text-sm leading-relaxed" style="color:rgba(255,255,255,0.48);">
-            Matériel haut de gamme <strong style="color:rgba(255,255,255,0.7);">Pioneer DJ</strong> et enceintes professionnelles. 
+            Matériel haut de gamme <strong style="color:rgba(255,255,255,0.7);">Pioneer DJ</strong> et enceintes
+            professionnelles.
             Un son cristallin adapté à chaque salle, des plus petites aux plus grandes salles de réception.
           </p>
         </div>
@@ -653,8 +1445,9 @@
           <div class="svc-icon"><i class="fas fa-music"></i></div>
           <h4 class="font-semibold text-white mb-2">Playlists Personnalisées</h4>
           <p class="text-sm leading-relaxed" style="color:rgba(255,255,255,0.48);">
-            Chaabi, Raï, Oriental, Gnawa, Châabi Marocain, Pop Française, International... 
-            Un programme <strong style="color:rgba(255,255,255,0.7);">co-construit avec vous</strong> pour satisfaire petits et grands.
+            Chaabi, Raï, Oriental, Gnawa, Châabi Marocain, Pop Française, International...
+            Un programme <strong style="color:rgba(255,255,255,0.7);">co-construit avec vous</strong> pour satisfaire
+            petits et grands.
           </p>
         </div>
 
@@ -662,8 +1455,9 @@
           <div class="svc-icon"><i class="fas fa-lightbulb"></i></div>
           <h4 class="font-semibold text-white mb-2">Jeux de Lumières</h4>
           <p class="text-sm leading-relaxed" style="color:rgba(255,255,255,0.48);">
-            Lasers, PAR LED, machine à fumée, stroboscopes... Un show lumineux professionnel pour 
-            sublimer chaque instant et créer une <strong style="color:rgba(255,255,255,0.7);">atmosphère magique</strong>.
+            Lasers, PAR LED, machine à fumée, stroboscopes... Un show lumineux professionnel pour
+            sublimer chaque instant et créer une <strong style="color:rgba(255,255,255,0.7);">atmosphère
+              magique</strong>.
           </p>
         </div>
 
@@ -671,7 +1465,8 @@
           <div class="svc-icon"><i class="fas fa-heart"></i></div>
           <h4 class="font-semibold text-white mb-2">Toutes les Générations</h4>
           <p class="text-sm leading-relaxed" style="color:rgba(255,255,255,0.48);">
-            La clé d'une soirée réussie : <strong style="color:rgba(255,255,255,0.7);">faire danser tout le monde</strong>. 
+            La clé d'une soirée réussie : <strong style="color:rgba(255,255,255,0.7);">faire danser tout le
+              monde</strong>.
             DJ Ali lit la salle et adapte l'ambiance en temps réel pour que personne ne reste assis.
           </p>
         </div>
@@ -680,7 +1475,8 @@
           <div class="svc-icon"><i class="fas fa-map-marker-alt"></i></div>
           <h4 class="font-semibold text-white mb-2">Déplacement en France</h4>
           <p class="text-sm leading-relaxed" style="color:rgba(255,255,255,0.48);">
-            Basé en <strong style="color:rgba(255,255,255,0.7);">Nouvelle-Aquitaine</strong>, DJ Ali se déplace partout en France. 
+            Basé en <strong style="color:rgba(255,255,255,0.7);">Nouvelle-Aquitaine</strong>, DJ Ali se déplace partout
+            en France.
             Bordeaux, Pau, Bayonne, La Rochelle... Contactez-nous pour étudier votre projet ensemble.
           </p>
         </div>
@@ -689,7 +1485,8 @@
           <div class="svc-icon"><i class="fas fa-calendar-check"></i></div>
           <h4 class="font-semibold text-white mb-2">Tous Événements</h4>
           <p class="text-sm leading-relaxed" style="color:rgba(255,255,255,0.48);">
-            <strong style="color:rgba(255,255,255,0.7);">Mariages, Fiançailles, Baptêmes, Anniversaires, Soirées dansantes</strong>... 
+            <strong style="color:rgba(255,255,255,0.7);">Mariages, Fiançailles, Baptêmes, Anniversaires, Soirées
+              dansantes</strong>...
             Aucune période refusée. Chaque événement mérite une prestation d'exception.
           </p>
         </div>
@@ -703,55 +1500,67 @@
        MÉDIAS & VIDÉOS
   ============================== -->
   <section id="videos" class="relative py-28 px-6 overflow-hidden" aria-label="Galerie vidéos">
-    <div class="orb" style="width:600px;height:600px;background:var(--gold);top:50%;right:-280px;transform:translateY(-50%);"></div>
+    <div class="orb"
+      style="width:600px;height:600px;background:var(--gold);top:50%;right:-280px;transform:translateY(-50%);"></div>
 
     <div class="max-w-7xl mx-auto">
       <div class="text-center mb-16" data-aos="fade-up">
         <span class="sec-tag">En Soirée</span>
-        <h2 class="sec-title mt-3">Médias<br/>& Vidéos</h2>
+        <h2 class="sec-title mt-3">Médias<br />& Vidéos</h2>
         <div class="deco-line mx-auto mt-5"></div>
-        <p class="text-sm mt-5 max-w-md mx-auto" style="color:rgba(255,255,255,0.45);">Survolez les vignettes pour voir les extraits et vivre l'ambiance de nos soirées.</p>
+        <p class="text-sm mt-5 max-w-md mx-auto" style="color:rgba(255,255,255,0.45);">Survolez les vignettes pour voir
+          les extraits et vivre l'ambiance de nos soirées.</p>
       </div>
 
       <!-- Grille asymétrique -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 
-        <div class="vid-card sm:col-span-2 h-72 lg:h-80" data-aos="fade-right" tabindex="0" role="button" aria-label="Soirée mariage oriental Bordeaux 2024">
-          <img src="assets/video-thumb-1.jpg" alt="Soirée mariage oriental Bordeaux — ambiance dansante et lasers" loading="lazy" />
+        <div class="vid-card sm:col-span-2 h-72 lg:h-80" data-aos="fade-right" tabindex="0" role="button"
+          aria-label="Soirée mariage oriental Bordeaux 2024">
+          <img src="assets/video-thumb-1.jpg" alt="Soirée mariage oriental Bordeaux — ambiance dansante et lasers"
+            loading="lazy" />
           <div class="vid-overlay"></div>
           <div class="play-icon"><i class="fas fa-play ml-1"></i></div>
           <div class="vid-lbl">
-            <span class="text-xs uppercase tracking-widest font-medium" style="color:rgba(201,168,76,0.8);">Mariage Oriental</span>
+            <span class="text-xs uppercase tracking-widest font-medium" style="color:rgba(201,168,76,0.8);">Mariage
+              Oriental</span>
             <p class="text-white font-semibold mt-1">Bordeaux · 2024</p>
           </div>
         </div>
 
-        <div class="vid-card h-72 lg:h-80" data-aos="fade-left" data-aos-delay="80" tabindex="0" role="button" aria-label="DJ Set professionnel mariage">
+        <div class="vid-card h-72 lg:h-80" data-aos="fade-left" data-aos-delay="80" tabindex="0" role="button"
+          aria-label="DJ Set professionnel mariage">
           <img src="assets/video-thumb-3.jpg" alt="DJ Ali aux platines Pioneer lors d'un mariage" loading="lazy" />
           <div class="vid-overlay"></div>
           <div class="play-icon"><i class="fas fa-play ml-1"></i></div>
           <div class="vid-lbl">
-            <span class="text-xs uppercase tracking-widest font-medium" style="color:rgba(201,168,76,0.8);">DJ Set Professionnel</span>
+            <span class="text-xs uppercase tracking-widest font-medium" style="color:rgba(201,168,76,0.8);">DJ Set
+              Professionnel</span>
             <p class="text-white font-semibold mt-1">Ambiance Pro</p>
           </div>
         </div>
 
-        <div class="vid-card h-64" data-aos="fade-right" data-aos-delay="150" tabindex="0" role="button" aria-label="Soirée fiançailles Pau 2023">
+        <div class="vid-card h-64" data-aos="fade-right" data-aos-delay="150" tabindex="0" role="button"
+          aria-label="Soirée fiançailles Pau 2023">
           <img src="assets/video-thumb-3.jpg" alt="Soirée de fiançailles animée par DJ Ali à Pau" loading="lazy" />
           <div class="vid-overlay"></div>
           <div class="play-icon"><i class="fas fa-play ml-1"></i></div>
           <div class="vid-lbl">
-            <span class="text-xs uppercase tracking-widest font-medium" style="color:rgba(201,168,76,0.8);">Fiançailles</span>
+            <span class="text-xs uppercase tracking-widest font-medium"
+              style="color:rgba(201,168,76,0.8);">Fiançailles</span>
             <p class="text-white font-semibold mt-1">Pau · 2023</p>
           </div>
         </div>
 
-        <div class="vid-card sm:col-span-2 h-64" data-aos="fade-left" data-aos-delay="220" tabindex="0" role="button" aria-label="Mariage franco-tunisien La Rochelle 2024">
-          <img src="assets/video-thumb-2.jpg" alt="Mariage franco-tunisien — piste de danse pleine, lasers multicolores" loading="lazy" />
+        <div class="vid-card sm:col-span-2 h-64" data-aos="fade-left" data-aos-delay="220" tabindex="0" role="button"
+          aria-label="Mariage franco-tunisien La Rochelle 2024">
+          <img src="assets/video-thumb-2.jpg" alt="Mariage franco-tunisien — piste de danse pleine, lasers multicolores"
+            loading="lazy" />
           <div class="vid-overlay"></div>
           <div class="play-icon"><i class="fas fa-play ml-1"></i></div>
           <div class="vid-lbl">
-            <span class="text-xs uppercase tracking-widest font-medium" style="color:rgba(201,168,76,0.8);">Mariage Mixte</span>
+            <span class="text-xs uppercase tracking-widest font-medium" style="color:rgba(201,168,76,0.8);">Mariage
+              Mixte</span>
             <p class="text-white font-semibold mt-1">La Rochelle · 2024</p>
           </div>
         </div>
@@ -760,7 +1569,8 @@
       <!-- Facebook CTA -->
       <div class="text-center mt-12" data-aos="fade-up">
         <p class="text-sm mb-4" style="color:rgba(255,255,255,0.35);">Plus de moments sur notre page Facebook</p>
-        <a href="https://www.facebook.com/djoriental.nellaquitaine" target="_blank" rel="noopener noreferrer" class="btn-ghost inline-flex">
+        <a href="https://www.facebook.com/djoriental.nellaquitaine" target="_blank" rel="noopener noreferrer"
+          class="btn-ghost inline-flex">
           <i class="fab fa-facebook" style="color:#1877F2;"></i>
           <span>DJ Oriental Nlle Aquitaine</span>
           <i class="fas fa-external-link-alt text-xs" style="opacity:0.4;"></i>
@@ -780,9 +1590,10 @@
     <div class="max-w-6xl mx-auto">
       <div class="text-center mb-16" data-aos="fade-up">
         <span class="sec-tag">Ils témoignent</span>
-        <h2 class="sec-title mt-3">Ce Qu'ils<br/>Disent de Nous</h2>
+        <h2 class="sec-title mt-3">Ce Qu'ils<br />Disent de Nous</h2>
         <div class="deco-line mx-auto mt-5"></div>
-        <p class="text-sm mt-5 max-w-md mx-auto" style="color:rgba(255,255,255,0.45);">Des centaines de mariés nous ont fait confiance. Voici quelques messages reçus après leurs soirées.</p>
+        <p class="text-sm mt-5 max-w-md mx-auto" style="color:rgba(255,255,255,0.45);">Des centaines de mariés nous ont
+          fait confiance. Voici quelques messages reçus après leurs soirées.</p>
       </div>
 
       <div class="swiper testi-swiper" data-aos="fade-up" data-aos-delay="200">
@@ -792,7 +1603,8 @@
           <div class="swiper-slide">
             <article class="testi-card max-w-lg mx-auto">
               <div class="flex items-center gap-3 mb-4 pb-4" style="border-bottom:1px solid var(--dark-border);">
-                <div class="w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold text-white" style="background:linear-gradient(135deg,#1877F2,#9b59b6);">S</div>
+                <div class="w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold text-white"
+                  style="background:linear-gradient(135deg,#1877F2,#9b59b6);">S</div>
                 <div>
                   <div class="font-semibold text-white text-sm">Samira & Rayan</div>
                   <div class="text-xs flex items-center gap-1.5" style="color:rgba(255,255,255,0.35);">
@@ -804,8 +1616,10 @@
               </div>
               <div class="tstamp">Hier à 23h42</div>
               <div class="space-y-2.5 mb-4">
-                <div class="bubble">DJ Ali 🔥🔥🔥 On vous dit un immense MERCI pour notre mariage à Bordeaux. On avait organisé un mariage franco-marocain et t'as géré PARFAITEMENT les deux ambiances !</div>
-                <div class="bubble">Les anciens dansaient avec le chaabi, les jeunes s'éclataient sur les sons modernes... La piste était pleine TOUTE la nuit ! 💃🕺</div>
+                <div class="bubble">DJ Ali 🔥🔥🔥 On vous dit un immense MERCI pour notre mariage à Bordeaux. On avait
+                  organisé un mariage franco-marocain et t'as géré PARFAITEMENT les deux ambiances !</div>
+                <div class="bubble">Les anciens dansaient avec le chaabi, les jeunes s'éclataient sur les sons
+                  modernes... La piste était pleine TOUTE la nuit ! 💃🕺</div>
               </div>
               <div class="flex items-center gap-2">
                 <span class="stars text-sm">★★★★★</span>
@@ -818,7 +1632,8 @@
           <div class="swiper-slide">
             <article class="testi-card max-w-lg mx-auto">
               <div class="flex items-center gap-3 mb-4 pb-4" style="border-bottom:1px solid var(--dark-border);">
-                <div class="w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold text-white" style="background:linear-gradient(135deg,#25D366,#128C7E);">K</div>
+                <div class="w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold text-white"
+                  style="background:linear-gradient(135deg,#25D366,#128C7E);">K</div>
                 <div>
                   <div class="font-semibold text-white text-sm">Khadija & Thomas</div>
                   <div class="text-xs flex items-center gap-1.5" style="color:rgba(255,255,255,0.35);">
@@ -830,8 +1645,11 @@
               </div>
               <div class="tstamp">La semaine dernière · 11h15</div>
               <div class="space-y-2.5 mb-4">
-                <div class="bubble wa">Salam Ali ! Je t'écris au nom de toute la famille pour te remercier du fond du cœur 🙏 Notre mariage franco-tunisien était INCROYABLE grâce à toi.</div>
-                <div class="bubble wa">Ma belle-famille française ne connaissait pas du tout la musique orientale... Maintenant ils sont tous fans ! 😂 Ils n'ont pas arrêté de danser jusqu'à 4h ! Tu es le meilleur DJ de toute la Nouvelle-Aquitaine ❤️</div>
+                <div class="bubble wa">Salam Ali ! Je t'écris au nom de toute la famille pour te remercier du fond du
+                  cœur 🙏 Notre mariage franco-tunisien était INCROYABLE grâce à toi.</div>
+                <div class="bubble wa">Ma belle-famille française ne connaissait pas du tout la musique orientale...
+                  Maintenant ils sont tous fans ! 😂 Ils n'ont pas arrêté de danser jusqu'à 4h ! Tu es le meilleur DJ de
+                  toute la Nouvelle-Aquitaine ❤️</div>
               </div>
               <div class="flex items-center gap-2">
                 <span class="stars text-sm">★★★★★</span>
@@ -844,7 +1662,8 @@
           <div class="swiper-slide">
             <article class="testi-card max-w-lg mx-auto">
               <div class="flex items-center gap-3 mb-4 pb-4" style="border-bottom:1px solid var(--dark-border);">
-                <div class="w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold text-white" style="background:linear-gradient(135deg,#F72585,#9D4EDD);">F</div>
+                <div class="w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold text-white"
+                  style="background:linear-gradient(135deg,#F72585,#9D4EDD);">F</div>
                 <div>
                   <div class="font-semibold text-white text-sm">Fatima Z.</div>
                   <div class="text-xs flex items-center gap-1.5" style="color:rgba(255,255,255,0.35);">
@@ -856,8 +1675,11 @@
               </div>
               <div class="tstamp">Il y a 2 semaines</div>
               <div class="space-y-2.5 mb-4">
-                <div class="bubble">Je voulais te remercier pour les fiançailles de ma fille à Pau 🎉 On avait peur que l'ambiance soit plate parce que les deux familles ne se connaissaient pas...</div>
-                <div class="bubble">Mais grâce à toi, en 20 minutes tout le monde était debout et la dancefloor était BLINDÉE ! Tu sais vraiment comment unir les cultures par la musique. On te recommande à tous nos proches sans hésiter ! 🙌🙌🙌</div>
+                <div class="bubble">Je voulais te remercier pour les fiançailles de ma fille à Pau 🎉 On avait peur que
+                  l'ambiance soit plate parce que les deux familles ne se connaissaient pas...</div>
+                <div class="bubble">Mais grâce à toi, en 20 minutes tout le monde était debout et la dancefloor était
+                  BLINDÉE ! Tu sais vraiment comment unir les cultures par la musique. On te recommande à tous nos
+                  proches sans hésiter ! 🙌🙌🙌</div>
               </div>
               <div class="flex items-center gap-2">
                 <span class="stars text-sm">★★★★★</span>
@@ -870,7 +1692,8 @@
           <div class="swiper-slide">
             <article class="testi-card max-w-lg mx-auto">
               <div class="flex items-center gap-3 mb-4 pb-4" style="border-bottom:1px solid var(--dark-border);">
-                <div class="w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold text-white" style="background:linear-gradient(135deg,#4CC9F0,#4361EE);">N</div>
+                <div class="w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold text-white"
+                  style="background:linear-gradient(135deg,#4CC9F0,#4361EE);">N</div>
                 <div>
                   <div class="font-semibold text-white text-sm">Nadia & Julien</div>
                   <div class="text-xs flex items-center gap-1.5" style="color:rgba(255,255,255,0.35);">
@@ -882,8 +1705,11 @@
               </div>
               <div class="tstamp">Il y a 1 an</div>
               <div class="space-y-2.5 mb-4">
-                <div class="bubble wa">Ali tu es FORT 💪 On avait vraiment peur pour notre mariage franco-algérien mais tu as tout géré à la perfection ! Le programme qu'on avait préparé ensemble était exactement ce qu'on voulait.</div>
-                <div class="bubble wa">Les invités nous parlent encore de la soirée un an après ! Le meilleur investissement de tout notre mariage c'était toi, sans hésitation 👏 Merci infiniment !</div>
+                <div class="bubble wa">Ali tu es FORT 💪 On avait vraiment peur pour notre mariage franco-algérien mais
+                  tu as tout géré à la perfection ! Le programme qu'on avait préparé ensemble était exactement ce qu'on
+                  voulait.</div>
+                <div class="bubble wa">Les invités nous parlent encore de la soirée un an après ! Le meilleur
+                  investissement de tout notre mariage c'était toi, sans hésitation 👏 Merci infiniment !</div>
               </div>
               <div class="flex items-center gap-2">
                 <span class="stars text-sm">★★★★★</span>
@@ -911,16 +1737,18 @@
     <div class="max-w-7xl mx-auto">
       <div class="text-center mb-16" data-aos="fade-up">
         <span class="sec-tag">Disponibilités</span>
-        <h2 class="sec-title mt-3">Réservez<br/>Votre Soirée</h2>
+        <h2 class="sec-title mt-3">Réservez<br />Votre Soirée</h2>
         <div class="deco-line mx-auto mt-5"></div>
-        <p class="text-sm mt-5 max-w-md mx-auto" style="color:rgba(255,255,255,0.45);">Vérifiez les disponibilités et envoyez votre demande. DJ Ali vous répondra dans les plus brefs délais.</p>
+        <p class="text-sm mt-5 max-w-md mx-auto" style="color:rgba(255,255,255,0.45);">Vérifiez les disponibilités et
+          envoyez votre demande. DJ Ali vous répondra dans les plus brefs délais.</p>
       </div>
 
       <div class="grid lg:grid-cols-2 gap-12 items-start">
 
         <!-- Calendrier -->
         <div data-aos="fade-right">
-          <h3 class="text-xs uppercase tracking-widest font-semibold mb-4 flex items-center gap-2" style="color:rgba(255,255,255,0.6);">
+          <h3 class="text-xs uppercase tracking-widest font-semibold mb-4 flex items-center gap-2"
+            style="color:rgba(255,255,255,0.6);">
             <i class="fas fa-calendar-alt" style="color:var(--gold);"></i> Calendrier des disponibilités
           </h3>
           <div class="glass p-6 rounded-xl mb-5">
@@ -928,9 +1756,12 @@
           </div>
           <!-- Légende -->
           <div class="flex flex-wrap gap-4 text-xs mb-6" style="color:rgba(255,255,255,0.5);">
-            <span class="flex items-center gap-1.5"><span style="width:10px;height:10px;border-radius:50%;background:var(--gold);display:inline-block;"></span>Sélectionné</span>
-            <span class="flex items-center gap-1.5"><span style="width:10px;height:10px;border-radius:50%;background:rgba(247,37,133,0.5);display:inline-block;"></span>Réservé</span>
-            <span class="flex items-center gap-1.5"><span style="width:10px;height:10px;border-radius:50%;background:rgba(76,201,240,0.5);display:inline-block;"></span>Disponible</span>
+            <span class="flex items-center gap-1.5"><span
+                style="width:10px;height:10px;border-radius:50%;background:var(--gold);display:inline-block;"></span>Sélectionné</span>
+            <span class="flex items-center gap-1.5"><span
+                style="width:10px;height:10px;border-radius:50%;background:rgba(247,37,133,0.5);display:inline-block;"></span>Réservé</span>
+            <span class="flex items-center gap-1.5"><span
+                style="width:10px;height:10px;border-radius:50%;background:rgba(76,201,240,0.5);display:inline-block;"></span>Disponible</span>
           </div>
           <!-- Info -->
           <div class="glass p-5 rounded-xl" style="border-color:rgba(201,168,76,0.1);">
@@ -938,7 +1769,9 @@
               <i class="fas fa-info-circle mt-0.5" style="color:var(--gold);"></i>
               <div>
                 <p class="text-sm font-medium text-white mb-1">Bonne nouvelle !</p>
-                <p class="text-xs leading-relaxed" style="color:rgba(255,255,255,0.4);">DJ Ali accepte toutes les dates disponibles — aucune période refusée. Envoyez votre demande même si votre date n'apparaît pas, nous l'étudierons ensemble.</p>
+                <p class="text-xs leading-relaxed" style="color:rgba(255,255,255,0.4);">DJ Ali accepte toutes les dates
+                  disponibles — aucune période refusée. Envoyez votre demande même si votre date n'apparaît pas, nous
+                  l'étudierons ensemble.</p>
               </div>
             </div>
           </div>
@@ -946,7 +1779,8 @@
 
         <!-- Formulaire -->
         <div data-aos="fade-left" data-aos-delay="150">
-          <h3 class="text-xs uppercase tracking-widest font-semibold mb-4 flex items-center gap-2" style="color:rgba(255,255,255,0.6);">
+          <h3 class="text-xs uppercase tracking-widest font-semibold mb-4 flex items-center gap-2"
+            style="color:rgba(255,255,255,0.6);">
             <i class="fas fa-paper-plane" style="color:var(--gold);"></i> Votre demande de réservation
           </h3>
 
@@ -955,26 +1789,31 @@
             <div class="grid grid-cols-2 gap-4">
               <div>
                 <label for="f-prenom" class="frm-label">Prénom <span style="color:var(--neon-pink);">*</span></label>
-                <input type="text" id="f-prenom" name="prenom" class="frm-input" placeholder="Votre prénom" required autocomplete="given-name" />
+                <input type="text" id="f-prenom" name="prenom" class="frm-input" placeholder="Votre prénom" required
+                  autocomplete="given-name" />
               </div>
               <div>
                 <label for="f-nom" class="frm-label">Nom <span style="color:var(--neon-pink);">*</span></label>
-                <input type="text" id="f-nom" name="nom" class="frm-input" placeholder="Votre nom" required autocomplete="family-name" />
+                <input type="text" id="f-nom" name="nom" class="frm-input" placeholder="Votre nom" required
+                  autocomplete="family-name" />
               </div>
             </div>
 
             <div>
               <label for="f-tel" class="frm-label">Téléphone <span style="color:var(--neon-pink);">*</span></label>
-              <input type="tel" id="f-tel" name="tel" class="frm-input" placeholder="06 XX XX XX XX" required autocomplete="tel" />
+              <input type="tel" id="f-tel" name="tel" class="frm-input" placeholder="06 XX XX XX XX" required
+                autocomplete="tel" />
             </div>
 
             <div>
               <label for="f-email" class="frm-label">Email</label>
-              <input type="email" id="f-email" name="email" class="frm-input" placeholder="votre@email.fr" autocomplete="email" />
+              <input type="email" id="f-email" name="email" class="frm-input" placeholder="votre@email.fr"
+                autocomplete="email" />
             </div>
 
             <div>
-              <label for="f-event" class="frm-label">Type d'événement <span style="color:var(--neon-pink);">*</span></label>
+              <label for="f-event" class="frm-label">Type d'événement <span
+                  style="color:var(--neon-pink);">*</span></label>
               <select id="f-event" name="event" class="frm-input" required>
                 <option value="" disabled selected>Choisir un type…</option>
                 <option value="mariage-oriental">💒 Mariage Oriental</option>
@@ -988,8 +1827,10 @@
             </div>
 
             <div>
-              <label for="f-date" class="frm-label">Date souhaitée <span style="color:var(--neon-pink);">*</span></label>
-              <input type="text" id="f-date" name="date" class="frm-input" placeholder="Cliquez pour choisir une date" required readonly />
+              <label for="f-date" class="frm-label">Date souhaitée <span
+                  style="color:var(--neon-pink);">*</span></label>
+              <input type="text" id="f-date" name="date" class="frm-input" placeholder="Cliquez pour choisir une date"
+                required readonly />
             </div>
 
             <div>
@@ -999,7 +1840,8 @@
 
             <div>
               <label for="f-msg" class="frm-label">Message complémentaire</label>
-              <textarea id="f-msg" name="message" class="frm-input resize-none" rows="4" placeholder="Décrivez votre événement, vos envies musicales, le nombre d'invités…"></textarea>
+              <textarea id="f-msg" name="message" class="frm-input resize-none" rows="4"
+                placeholder="Décrivez votre événement, vos envies musicales, le nombre d'invités…"></textarea>
             </div>
 
             <div class="flex items-start gap-3">
@@ -1017,7 +1859,8 @@
 
             <p class="text-center text-xs" style="color:rgba(255,255,255,0.28);">
               Ou directement par téléphone :
-              <a href="tel:0618410680" class="transition-colors ml-1" style="color:rgba(201,168,76,0.65);">06 18 41 06 80</a>
+              <a href="tel:0618410680" class="transition-colors ml-1" style="color:rgba(201,168,76,0.65);">06 18 41 06
+                80</a>
             </p>
 
           </form>
@@ -1032,18 +1875,25 @@
        FOOTER & CONTACT
   ============================== -->
   <footer id="contact" class="relative pt-20 pb-8 px-6" aria-label="Pied de page">
-    <div class="orb" style="width:450px;height:450px;background:var(--neon-purple);top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+    <div class="orb"
+      style="width:450px;height:450px;background:var(--neon-purple);top:50%;left:50%;transform:translate(-50%,-50%);">
+    </div>
 
     <div class="max-w-7xl mx-auto">
 
       <!-- Bande CTA -->
-      <div class="glass rounded-2xl p-8 lg:p-14 mb-16 text-center relative overflow-hidden" style="border-color:rgba(201,168,76,0.13);" data-aos="fade-up">
-        <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(201,168,76,0.06) 0%,transparent 70%);pointer-events:none;"></div>
-        <h2 class="font-bebas text-5xl lg:text-7xl mb-4 relative z-10" style="background:linear-gradient(135deg,#fff 30%,var(--gold)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">
-          Créons ensemble<br/>votre soirée parfaite
+      <div class="glass rounded-2xl p-8 lg:p-14 mb-16 text-center relative overflow-hidden"
+        style="border-color:rgba(201,168,76,0.13);" data-aos="fade-up">
+        <div
+          style="position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(201,168,76,0.06) 0%,transparent 70%);pointer-events:none;">
+        </div>
+        <h2 class="font-bebas text-5xl lg:text-7xl mb-4 relative z-10"
+          style="background:linear-gradient(135deg,#fff 30%,var(--gold)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">
+          Créons ensemble<br />votre soirée parfaite
         </h2>
         <p class="text-sm max-w-lg mx-auto mb-8 relative z-10" style="color:rgba(255,255,255,0.45);">
-          Une date en tête ? Un projet de mariage ? Contactez DJ Ali dès aujourd'hui et construisons ensemble la soirée dont vous rêvez.
+          Une date en tête ? Un projet de mariage ? Contactez DJ Ali dès aujourd'hui et construisons ensemble la soirée
+          dont vous rêvez.
         </p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4 relative z-10">
           <a href="tel:0618410680" class="btn-primary">
@@ -1059,20 +1909,28 @@
       <div class="grid sm:grid-cols-3 gap-10 mb-12">
 
         <div>
-          <div class="font-bebas text-4xl tracking-widest mb-2" style="background:linear-gradient(135deg,var(--gold-light),var(--gold)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">DJ ALI</div>
+          <div class="font-bebas text-4xl tracking-widest mb-2"
+            style="background:linear-gradient(135deg,var(--gold-light),var(--gold)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">
+            DJ ALI</div>
           <p class="text-xs leading-relaxed max-w-xs mb-5" style="color:rgba(255,255,255,0.28);">
-            Spécialiste des mariages orientaux et mixtes en Nouvelle-Aquitaine. L'ambiance festive qui rassemble toutes les générations.
+            Spécialiste des mariages orientaux et mixtes en Nouvelle-Aquitaine. L'ambiance festive qui rassemble toutes
+            les générations.
           </p>
           <div class="flex gap-3">
-            <a href="https://www.facebook.com/djoriental.nellaquitaine" target="_blank" rel="noopener noreferrer" class="soc-btn" aria-label="Facebook DJ Oriental Nlle Aquitaine"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="soc-btn" aria-label="Instagram DJ Ali"><i class="fab fa-instagram"></i></a>
-            <a href="https://wa.me/33618410680" target="_blank" rel="noopener noreferrer" class="soc-btn" aria-label="WhatsApp DJ Ali"><i class="fab fa-whatsapp"></i></a>
-            <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" class="soc-btn" aria-label="TikTok DJ Ali"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.facebook.com/djoriental.nellaquitaine" target="_blank" rel="noopener noreferrer"
+              class="soc-btn" aria-label="Facebook DJ Oriental Nlle Aquitaine"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="soc-btn"
+              aria-label="Instagram DJ Ali"><i class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/33618410680" target="_blank" rel="noopener noreferrer" class="soc-btn"
+              aria-label="WhatsApp DJ Ali"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" class="soc-btn"
+              aria-label="TikTok DJ Ali"><i class="fab fa-tiktok"></i></a>
           </div>
         </div>
 
         <div>
-          <h4 class="text-xs font-semibold uppercase tracking-widest mb-4" style="color:rgba(255,255,255,0.3);">Navigation</h4>
+          <h4 class="text-xs font-semibold uppercase tracking-widest mb-4" style="color:rgba(255,255,255,0.3);">
+            Navigation</h4>
           <ul class="space-y-2.5">
             <li><a href="#hero" class="foot-link">Accueil</a></li>
             <li><a href="#about" class="foot-link">À Propos & Services</a></li>
@@ -1083,22 +1941,32 @@
         </div>
 
         <div>
-          <h4 class="text-xs font-semibold uppercase tracking-widest mb-4" style="color:rgba(255,255,255,0.3);">Contact Direct</h4>
+          <h4 class="text-xs font-semibold uppercase tracking-widest mb-4" style="color:rgba(255,255,255,0.3);">Contact
+            Direct</h4>
           <ul class="space-y-3">
             <li class="flex items-center gap-3 text-sm">
-              <span class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(201,168,76,0.1);"><i class="fas fa-phone text-xs" style="color:var(--gold);"></i></span>
+              <span class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
+                style="background:rgba(201,168,76,0.1);"><i class="fas fa-phone text-xs"
+                  style="color:var(--gold);"></i></span>
               <a href="tel:0618410680" class="foot-link">06 18 41 06 80</a>
             </li>
             <li class="flex items-center gap-3 text-sm">
-              <span class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(201,168,76,0.1);"><i class="fas fa-envelope text-xs" style="color:var(--gold);"></i></span>
+              <span class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
+                style="background:rgba(201,168,76,0.1);"><i class="fas fa-envelope text-xs"
+                  style="color:var(--gold);"></i></span>
               <a href="mailto:a.nouiri@live.fr" class="foot-link">a.nouiri@live.fr</a>
             </li>
             <li class="flex items-center gap-3 text-sm">
-              <span class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(201,168,76,0.1);"><i class="fab fa-facebook text-xs" style="color:var(--gold);"></i></span>
-              <a href="https://www.facebook.com/djoriental.nellaquitaine" target="_blank" rel="noopener noreferrer" class="foot-link">DJ Oriental Nlle Aquitaine</a>
+              <span class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
+                style="background:rgba(201,168,76,0.1);"><i class="fab fa-facebook text-xs"
+                  style="color:var(--gold);"></i></span>
+              <a href="https://www.facebook.com/djoriental.nellaquitaine" target="_blank" rel="noopener noreferrer"
+                class="foot-link">DJ Oriental Nlle Aquitaine</a>
             </li>
             <li class="flex items-center gap-3 text-sm">
-              <span class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(201,168,76,0.1);"><i class="fas fa-map-marker-alt text-xs" style="color:var(--gold);"></i></span>
+              <span class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
+                style="background:rgba(201,168,76,0.1);"><i class="fas fa-map-marker-alt text-xs"
+                  style="color:var(--gold);"></i></span>
               <span style="color:rgba(255,255,255,0.38);">Nouvelle-Aquitaine, France</span>
             </li>
           </ul>
@@ -1107,8 +1975,12 @@
       </div>
 
       <hr class="hr-grd mb-6" />
-      <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs" style="color:rgba(255,255,255,0.22);">
-        <span>© 2024 DJ Ali · Tous droits réservés · <a href="https://dj-ali.com" style="transition:color 0.3s;" class="hover:text-gold/60">dj-ali.com</a></span>
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs"
+        style="color:rgba(255,255,255,0.22);">
+        <span>© 2026 DJ Ali · Tous droits réservés · <a href="https://dj-ali.com" style="transition:color 0.3s;"
+            class="hover:text-gold/60">dj-ali.com</a> · by <a href="https://maxsolving.com" target="_blank"
+            rel="noopener noreferrer" style="color:var(--gold); transition:color 0.3s;"
+            class="hover:underline font-medium">MaxSolving</a></span>
         <span>DJ Oriental & Mixte · Nouvelle-Aquitaine · France</span>
       </div>
     </div>
@@ -1136,12 +2008,12 @@
     /* ============================================
        1. CURSEUR PERSONNALISÉ (desktop)
     ============================================ */
-    const $cursor    = document.getElementById('cursor');
+    const $cursor = document.getElementById('cursor');
     const $cursorDot = document.getElementById('cursor-dot');
 
     if ($cursor) {
       document.addEventListener('mousemove', e => {
-        gsap.to($cursor,    { x: e.clientX, y: e.clientY, duration: 0.4, ease: 'power2.out' });
+        gsap.to($cursor, { x: e.clientX, y: e.clientY, duration: 0.4, ease: 'power2.out' });
         gsap.to($cursorDot, { x: e.clientX, y: e.clientY, duration: 0.1 });
       });
       document.querySelectorAll('a, button, .vid-card, .svc-card').forEach(el => {
@@ -1153,10 +2025,10 @@
     /* ============================================
        2. LOADER — Barre de progression simulée
     ============================================ */
-    const $loader    = document.getElementById('loader');
+    const $loader = document.getElementById('loader');
     const $loaderBar = document.getElementById('loader-bar-inner');
     const $loaderPct = document.getElementById('loader-pct');
-    const $loaderLogo= document.getElementById('loader-logo');
+    const $loaderLogo = document.getElementById('loader-logo');
     const $loaderSub = document.getElementById('loader-subtitle');
 
     let loadPct = 0;
@@ -1219,7 +2091,7 @@
        4. TYPEWRITER
     ============================================ */
     const TW_TEXT = "L'élégance et l'ambiance festive pour vos mariages orientaux et mixtes.";
-    const $twText   = document.getElementById('tw-text');
+    const $twText = document.getElementById('tw-text');
     const $twCursor = document.getElementById('tw-cursor');
     let twIdx = 0;
 
@@ -1248,7 +2120,7 @@
        6. MENU BURGER MOBILE
     ============================================ */
     const $burger = document.getElementById('burger');
-    const $mMenu  = document.getElementById('mobile-menu');
+    const $mMenu = document.getElementById('mobile-menu');
     const $bLines = document.querySelectorAll('.bline');
     let mOpen = false;
 
@@ -1261,8 +2133,8 @@
         $mMenu.classList.remove('opacity-0', 'pointer-events-none');
         $mMenu.classList.add('opacity-100');
         document.body.style.overflow = 'hidden';
-        gsap.to($bLines[0], { rotation: 45, y: 7,  duration: 0.3 });
-        gsap.to($bLines[1], { opacity: 0,          duration: 0.2 });
+        gsap.to($bLines[0], { rotation: 45, y: 7, duration: 0.3 });
+        gsap.to($bLines[1], { opacity: 0, duration: 0.2 });
         gsap.to($bLines[2], { rotation: -45, y: -7, duration: 0.3 });
         gsap.from('.mnav', { y: 25, opacity: 0, stagger: 0.07, duration: 0.45, ease: 'power3.out', delay: 0.08 });
       } else {
@@ -1276,7 +2148,7 @@
       $mMenu.classList.remove('opacity-100');
       document.body.style.overflow = '';
       gsap.to($bLines[0], { rotation: 0, y: 0, duration: 0.3 });
-      gsap.to($bLines[1], { opacity: 1,         duration: 0.3 });
+      gsap.to($bLines[1], { opacity: 1, duration: 0.3 });
       gsap.to($bLines[2], { rotation: 0, y: 0, duration: 0.3 });
     }
 
@@ -1297,10 +2169,10 @@
         const c = colors[Math.floor(Math.random() * colors.length)];
         p.style.cssText = `
           width:${s}px; height:${s}px; background:${c};
-          left:${Math.random()*100}%; bottom:-10px;
-          animation-duration:${Math.random()*10+8}s;
-          animation-delay:${Math.random()*12}s;
-          box-shadow:0 0 ${s*2}px ${c};
+          left:${Math.random() * 100}%; bottom:-10px;
+          animation-duration:${Math.random() * 10 + 8}s;
+          animation-delay:${Math.random() * 12}s;
+          box-shadow:0 0 ${s * 2}px ${c};
           position:absolute;
         `;
         container.appendChild(p);
@@ -1365,8 +2237,8 @@
        11. FLATPICKR — Calendriers & Sync Google Calendar via n8n
     ============================================ */
     const now = new Date();
-    const yr  = now.getFullYear();
-    const mn  = (now.getMonth() + 1).toString().padStart(2, '0');
+    const yr = now.getFullYear();
+    const mn = (now.getMonth() + 1).toString().padStart(2, '0');
     const mn2 = ((now.getMonth() + 2) % 12 || 12).toString().padStart(2, '0');
 
     let reservedDates = [
@@ -1390,7 +2262,7 @@
         if (df) {
           df.value = dateStr;
           df.style.borderColor = 'rgba(201,168,76,0.5)';
-          df.style.boxShadow   = '0 0 0 3px rgba(201,168,76,0.08)';
+          df.style.boxShadow = '0 0 0 3px rgba(201,168,76,0.08)';
           setTimeout(() => { df.style.borderColor = ''; df.style.boxShadow = ''; }, 2500);
         }
       },
@@ -1421,9 +2293,9 @@
        12. FORMULAIRE DE RÉSERVATION
     ============================================ */
     const $form = document.getElementById('book-form');
-    const $sub  = document.getElementById('submit-btn');
+    const $sub = document.getElementById('submit-btn');
     const $toast = document.getElementById('toast');
-    const $toastMsg  = document.getElementById('toast-msg');
+    const $toastMsg = document.getElementById('toast-msg');
     const $toastIcon = document.getElementById('toast-icon');
 
     function showToast(msg, error = false) {
@@ -1444,7 +2316,7 @@
         if (bad) {
           valid = false;
           f.style.borderColor = 'rgba(247,37,133,0.6)';
-          f.style.boxShadow   = '0 0 0 3px rgba(247,37,133,0.1)';
+          f.style.boxShadow = '0 0 0 3px rgba(247,37,133,0.1)';
           setTimeout(() => { f.style.borderColor = ''; f.style.boxShadow = ''; }, 3000);
         }
       });
@@ -1516,7 +2388,7 @@
        14. SMOOTH SCROLL ancres
     ============================================ */
     document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', function(e) {
+      a.addEventListener('click', function (e) {
         const target = document.querySelector(this.getAttribute('href'));
         if (!target) return;
         e.preventDefault();
@@ -1527,7 +2399,7 @@
     /* ============================================
        15. ACTIVE NAV LINK au scroll
     ============================================ */
-    const sections  = document.querySelectorAll('section[id], footer[id]');
+    const sections = document.querySelectorAll('section[id], footer[id]');
     const navLinks2 = document.querySelectorAll('.nav-link');
 
     new IntersectionObserver(entries => {
@@ -1539,7 +2411,7 @@
           });
         }
       });
-    }, { threshold: 0.35, rootMargin: '-80px 0px -40% 0px' }).observe ?? sections.forEach(s => {});
+    }, { threshold: 0.35, rootMargin: '-80px 0px -40% 0px' }).observe ?? sections.forEach(s => { });
 
     /* Appliquer sur chaque section */
     const secObserver = new IntersectionObserver(entries => {
@@ -1570,4 +2442,5 @@
 
   </script>
 </body>
+
 </html>
