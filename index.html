@@ -951,14 +951,38 @@
       font-weight: 700;
     }
 
+    /* Dates passées (désactivées car passées) */
     .flatpickr-day.flatpickr-disabled,
     .flatpickr-day.flatpickr-disabled:hover {
-      color: rgba(255, 100, 150, 0.8) !important;
-      background: rgba(247, 37, 133, 0.22) !important;
-      border: 1px solid rgba(247, 37, 133, 0.45) !important;
-      text-decoration: line-through;
+      color: rgba(255, 255, 255, 0.18) !important;
+      background: transparent !important;
+      border-color: transparent !important;
+      cursor: not-allowed !important;
+    }
+
+    /* Dates bloquées / réservées (en rose/rouge vif selon la légende) */
+    .flatpickr-day.date-reserved,
+    .flatpickr-day.date-reserved:hover {
+      background: rgba(247, 37, 133, 0.25) !important;
+      color: #ff4d94 !important;
+      border: 1.5px solid #f72585 !important;
+      font-weight: 700 !important;
+      text-decoration: line-through !important;
       cursor: not-allowed !important;
       pointer-events: none !important;
+      position: relative;
+    }
+    .flatpickr-day.date-reserved::after {
+      content: '';
+      position: absolute;
+      bottom: 3px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #f72585;
+      box-shadow: 0 0 6px #f72585;
     }
 
     .flatpickr-months {
@@ -2291,10 +2315,27 @@
       `${yr}-${mn2}-02`, `${yr}-${mn2}-09`, `${yr}-${mn2}-16`,
     ];
 
+    function isDateReserved(date) {
+      if (!date) return false;
+      const y = date.getFullYear();
+      const m = String(date.getMonth() + 1).padStart(2, '0');
+      const d = String(date.getDate()).padStart(2, '0');
+      return reservedDates.includes(`${y}-${m}-${d}`);
+    }
+
+    function onDayCreateCallback(dObj, dStr, fp, dayElem) {
+      if (!dayElem.dateObj) return;
+      if (isDateReserved(dayElem.dateObj)) {
+        dayElem.classList.add('date-reserved');
+        dayElem.setAttribute('title', 'Date réservée — indisponible');
+      }
+    }
+
     const fpOptions = {
       locale: 'fr',
       minDate: 'today',
-      disable: reservedDates,
+      disable: [isDateReserved],
+      onDayCreate: onDayCreateCallback,
       dateFormat: 'd/m/Y',
     };
 
@@ -2325,11 +2366,11 @@
           if (Array.isArray(dates) && dates.length > 0) {
             reservedDates = [...new Set([...reservedDates, ...dates])];
             if (fpInline) {
-              fpInline.set('disable', reservedDates);
+              fpInline.set('disable', [isDateReserved]);
               fpInline.redraw();
             }
             if (fpInput) {
-              fpInput.set('disable', reservedDates);
+              fpInput.set('disable', [isDateReserved]);
               fpInput.redraw();
             }
           }
