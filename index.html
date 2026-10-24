@@ -86,11 +86,17 @@
       scroll-behavior: smooth;
     }
 
+    html {
+      overflow-x: hidden;
+      max-width: 100vw;
+    }
+
     body {
       background-color: var(--dark);
       color: #fff;
       font-family: 'Outfit', sans-serif;
       overflow-x: hidden;
+      max-width: 100vw;
     }
 
     ::-webkit-scrollbar {
@@ -945,10 +951,14 @@
       font-weight: 700;
     }
 
-    .flatpickr-day.flatpickr-disabled {
-      color: rgba(255, 255, 255, 0.15) !important;
-      background: rgba(247, 37, 133, 0.06) !important;
+    .flatpickr-day.flatpickr-disabled,
+    .flatpickr-day.flatpickr-disabled:hover {
+      color: rgba(255, 100, 150, 0.8) !important;
+      background: rgba(247, 37, 133, 0.22) !important;
+      border: 1px solid rgba(247, 37, 133, 0.45) !important;
       text-decoration: line-through;
+      cursor: not-allowed !important;
+      pointer-events: none !important;
     }
 
     .flatpickr-months {
@@ -1018,11 +1028,12 @@
     /* Toast */
     #toast {
       position: fixed;
-      bottom: 95px;
-      right: 24px;
+      bottom: 90px;
+      right: 16px;
+      left: 16px;
       z-index: 9999;
-      padding: 1rem 1.5rem;
-      border-radius: 4px;
+      padding: 0.85rem 1.2rem;
+      border-radius: 8px;
       font-weight: 600;
       font-size: 0.84rem;
       display: flex;
@@ -1031,6 +1042,8 @@
       transform: translateY(120px);
       opacity: 0;
       transition: all 0.4s ease;
+      max-width: 420px;
+      margin-left: auto;
     }
 
     #toast.show {
@@ -1038,14 +1051,22 @@
       opacity: 1;
     }
 
+    @media (min-width: 480px) {
+      #toast {
+        left: auto;
+        right: 20px;
+        max-width: 380px;
+      }
+    }
+
     /* WhatsApp Bouton Flottant */
     .wa-float {
       position: fixed;
-      bottom: 24px;
-      right: 24px;
+      bottom: 20px;
+      right: 20px;
       z-index: 9990;
-      width: 58px;
-      height: 58px;
+      width: 56px;
+      height: 56px;
       background: linear-gradient(135deg, #25D366, #128C7E);
       color: #fff !important;
       border-radius: 50%;
@@ -1055,6 +1076,8 @@
       box-shadow: 0 8px 30px rgba(37, 211, 102, 0.45);
       transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       text-decoration: none;
+      /* Prevent from causing horizontal overflow */
+      will-change: transform;
     }
 
     .wa-float:hover {
@@ -1070,22 +1093,23 @@
       border: 2px solid rgba(37, 211, 102, 0.5);
       animation: waPulse 2s infinite;
       pointer-events: none;
+      /* clip so the pulse doesn't extend beyond the button area on mobile */
     }
 
     @keyframes waPulse {
       0% {
         transform: scale(1);
-        opacity: 0.8;
+        opacity: 0.7;
       }
       100% {
-        transform: scale(1.4);
+        transform: scale(1.35);
         opacity: 0;
       }
     }
 
     .wa-tooltip {
       position: absolute;
-      right: 70px;
+      right: 68px;
       background: rgba(14, 14, 26, 0.95);
       color: #fff;
       padding: 7px 14px;
@@ -1103,6 +1127,19 @@
     .wa-float:hover .wa-tooltip {
       opacity: 1;
       transform: translateX(0);
+    }
+
+    /* Mobile : cacher le tooltip et réduire le bouton */
+    @media (max-width: 768px) {
+      .wa-float {
+        bottom: 16px;
+        right: 16px;
+        width: 52px;
+        height: 52px;
+      }
+      .wa-tooltip {
+        display: none;
+      }
     }
 
     /* Mobile menu */
@@ -2282,13 +2319,19 @@
     /* Synchronisation des dates bloquées depuis n8n */
     async function syncBlockedDates() {
       try {
-        const res = await fetch('https://n8n.deposark.com/webhook/dates-bloquees');
+        const res = await fetch('https://n8n.deposark.com/webhook/dates-bloquees', { cache: 'no-store' });
         if (res.ok) {
           const dates = await res.json();
           if (Array.isArray(dates) && dates.length > 0) {
             reservedDates = [...new Set([...reservedDates, ...dates])];
-            if (fpInline) fpInline.set('disable', reservedDates);
-            if (fpInput) fpInput.set('disable', reservedDates);
+            if (fpInline) {
+              fpInline.set('disable', reservedDates);
+              fpInline.redraw();
+            }
+            if (fpInput) {
+              fpInput.set('disable', reservedDates);
+              fpInput.redraw();
+            }
           }
         }
       } catch (e) {
