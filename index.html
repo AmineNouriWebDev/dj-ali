@@ -2402,24 +2402,43 @@
     }
 
     function validateForm(form) {
-      let valid = true;
+      let firstBad = null;
       form.querySelectorAll('[required]').forEach(f => {
         const bad = f.type === 'checkbox' ? !f.checked : !f.value.trim();
         if (bad) {
-          valid = false;
-          f.style.borderColor = 'rgba(247,37,133,0.6)';
-          f.style.boxShadow = '0 0 0 3px rgba(247,37,133,0.1)';
-          setTimeout(() => { f.style.borderColor = ''; f.style.boxShadow = ''; }, 3000);
+          if (!firstBad) firstBad = f;
+          if (f.type === 'checkbox') {
+            const lbl = f.closest('div')?.querySelector('label');
+            if (lbl) {
+              lbl.style.color = 'var(--neon-pink)';
+              setTimeout(() => { lbl.style.color = ''; }, 3000);
+            }
+          } else {
+            f.style.borderColor = 'rgba(247,37,133,0.8)';
+            f.style.boxShadow = '0 0 0 3px rgba(247,37,133,0.2)';
+            setTimeout(() => { f.style.borderColor = ''; f.style.boxShadow = ''; }, 3000);
+          }
         }
       });
-      return valid;
+
+      if (firstBad) {
+        if (firstBad.id === 'f-rgpd') {
+          showToast('Veuillez cocher la case d\'acceptation des données pour continuer.', true);
+        } else if (firstBad.id === 'f-date') {
+          showToast('Veuillez sélectionner une date disponible dans le calendrier.', true);
+        } else {
+          showToast('Veuillez remplir tous les champs obligatoires (*).', true);
+        }
+        firstBad.focus();
+        return false;
+      }
+      return true;
     }
 
     if ($form) {
       $form.addEventListener('submit', async e => {
         e.preventDefault();
         if (!validateForm($form)) {
-          showToast('Veuillez remplir tous les champs obligatoires.', true);
           return;
         }
         const orig = $sub.innerHTML;
@@ -2444,25 +2463,43 @@
 
         const WEBHOOK_URL = 'https://n8n.deposark.com/webhook/ec167f4b-58a4-4678-b78c-0272177cfc50';
 
+        let sentOk = false;
         try {
-          await fetch(WEBHOOK_URL, {
+          const res = await fetch(WEBHOOK_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
           });
-
-          $sub.innerHTML = '<i class="fas fa-check"></i><span>Message envoyé !</span>';
-          showToast('✨ Votre demande a été envoyée ! DJ Ali vous recontactera très rapidement.');
-          $form.reset();
-        } catch (err) {
-          console.warn('Webhook transmission info:', err);
-          // Note : en cas de restriction CORS browser, la requête est quand même traitée par n8n
-          $sub.innerHTML = '<i class="fas fa-check"></i><span>Message envoyé !</span>';
-          showToast('✨ Votre demande a été transmise ! DJ Ali vous recontactera très rapidement.');
-          $form.reset();
-        } finally {
-          setTimeout(() => { $sub.innerHTML = orig; $sub.disabled = false; }, 3200);
+          if (res.ok) {
+            sentOk = true;
+          }
+        } catch (fetchErr) {
+          console.warn('Standard fetch attempt info:', fetchErr);
+          // Fallback via sendBeacon (idéal en local / cross-origin strict)
+          try {
+            const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+            if (navigator.sendBeacon && navigator.sendBeacon(WEBHOOK_URL, blob)) {
+              sentOk = true;
+            }
+          } catch (bErr) {
+            console.warn('sendBeacon attempt info:', bErr);
+          }
         }
+
+        if (sentOk) {
+          $sub.innerHTML = '<i class="fas fa-check"></i><span>Demande envoyée !</span>';
+          showToast('✨ Votre demande a été envoyée ! DJ Ali vous répondra sous 24h.');
+          $form.reset();
+        } else {
+          $sub.innerHTML = orig;
+          $sub.disabled = false;
+          showToast('⚠️ Impossible de joindre le serveur. Contactez directement DJ Ali par WhatsApp.', true);
+        }
+
+        setTimeout(() => {
+          $sub.innerHTML = orig;
+          $sub.disabled = false;
+        }, 3200);
       });
     }
 
