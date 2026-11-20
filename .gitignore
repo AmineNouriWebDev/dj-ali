@@ -11,3 +11,7 @@ desktop.ini
 *.njsproj
 *.sln
 *.sw?
+
+# Private server configs / notes
+configurationVPS*
+*.local

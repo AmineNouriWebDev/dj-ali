@@ -1,0 +1,72 @@
+{
+  "name": "DJ Ali — DJ Oriental & Mixte",
+  "short_name": "DJ Ali",
+  "description": "DJ spécialiste des mariages orientaux et mixtes en Nouvelle-Aquitaine et partout en France.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#080810",
+  "theme_color": "#C9A84C",
+  "lang": "fr",
+  "dir": "ltr",
+  "categories": ["entertainment", "music", "lifestyle"],
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icon-192-maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Demander un devis",
+      "short_name": "Devis",
+      "description": "Vérifier les disponibilités et demander un devis personnalisé",
+      "url": "/#booking",
+      "icons": [
+        {
+          "src": "assets/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Vidéos & Ambiance",
+      "short_name": "Vidéos",
+      "description": "Découvrir les vidéos en live",
+      "url": "/#videos",
+      "icons": [
+        {
+          "src": "assets/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Appeler DJ Ali",
+      "short_name": "Appeler",
+      "description": "Contacter directement DJ Ali au téléphone",
+      "url": "tel:0618410680"
+    }
+  ]
+}
